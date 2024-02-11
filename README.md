@@ -15,3 +15,8 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+
+## The Midpoint Calculator
+
+Meet in the middle, effortlessly.
