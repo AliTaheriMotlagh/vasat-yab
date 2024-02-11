@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  username       String @unique
+  imageUrl       String @db.Text
+  externalUserId String @unique
+
+  Requester Frind[]    @relation("Requester")
+  Accepter  Frind[]    @relation("Accepter")
+  Room      Room[]
+  RoomInfo  RoomInfo[]
+}
+
+model Frind {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  requesterId String
+  accepterId  String
+  isAccept    Boolean @default(false)
+
+  requester User @relation(name: "Requester", fields: [requesterId], references: [id], onDelete: Cascade)
+  accepter  User @relation(name: "Accepter", fields: [accepterId], references: [id], onDelete: Cascade)
+
+  @@unique([requesterId, accepterId])
+  @@index([requesterId])
+  @@index([accepterId])
+}
+
+model Room {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title     String
+  creatorId String
+  vasat     String
+
+  User     User       @relation(fields: [creatorId], references: [id])
+  RoomInfo RoomInfo[]
+}
+
+model RoomInfo {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  roomId       String
+  userId       String
+  userLocation String
+  isAccept     Boolean @default(false)
+
+  User User @relation(fields: [userId], references: [id])
+  Room Room @relation(fields: [roomId], references: [id])
+}
