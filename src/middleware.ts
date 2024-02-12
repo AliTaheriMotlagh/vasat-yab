@@ -9,8 +9,7 @@ import {
 } from "@/routes";
 
 const { auth } = NextAuth(authConfig);
-
-export default auth((req) => {
+const middleware = (req: any) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
 
@@ -24,7 +23,7 @@ export default auth((req) => {
 
   if (isAuthRoute) {
     if (isLoggedIn) {
-      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl))
+      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
     }
     return null;
   }
@@ -34,9 +33,13 @@ export default auth((req) => {
   }
 
   return null;
-})
+};
+
+export default auth((req) => {
+  middleware(req);
+});
 
 // Optionally, don't invoke Middleware on some paths
 export const config = {
-  matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
-}
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+};
