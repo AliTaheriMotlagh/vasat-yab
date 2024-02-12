@@ -23,8 +23,8 @@ model User {
   emailVerified DateTime?
   image         String?
   password      String?
-  
-  role          UserRole @default(USER)
+
+  role UserRole @default(USER)
 
   accounts  Account[]
   Requester Frind[]    @relation("Requester")
@@ -53,9 +53,18 @@ model Account {
 }
 
 model VerificationToken {
-  id String @id @default(cuid())
-  email String
-  token String @unique
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model PasswordResetToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
   expires DateTime
 
   @@unique([email, token])
