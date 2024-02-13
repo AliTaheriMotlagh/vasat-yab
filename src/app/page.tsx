@@ -16,8 +16,9 @@ export default function Home() {
         <h1
           className={cn(
             "text-6xl font-semibold text-white drop-shadow-md",
-            font.className
-          )}>
+            font.className,
+          )}
+        >
           🗺️ Vasat Yab
         </h1>
         <p className="text-white text-lg">The Midpoint Calculator</p>
