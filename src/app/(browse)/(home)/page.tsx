@@ -56,7 +56,7 @@ export default function Page() {
       <div className="bg-gray-100 grid lg:grid-cols-2 2xl:grid-cols-5">
         <div className="px-8 py-12 max-w-md mx-auto sm:max-w-xl lg:px-12 lg:py-24 lg:max-w-full xl:mr-0 2xl:col-span-2">
           <div className="xl:max-w-xl">
-            <img className="h-10" src="/img/logo-brand.svg" alt="VasatYab" />
+            <img className="h-10" src="/img/logo.svg" alt="VasatYab" />
             <img
               className="mt-6 rounded-lg shadow-xl sm:mt-8 sm:h-64 sm:w-full sm:object-cover object-center lg:hidden"
               src={`/img/landing/baner/${imageName}.jpg`}
