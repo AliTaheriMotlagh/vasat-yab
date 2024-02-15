@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export default function Page() {
-  const imageName = Math.floor(Math.random() * (13 - 1 + 1)) + 1;
+  const imageRandom = Math.floor(Math.random() * (13 - 1 + 1)) + 1;
   const popularDestinations = [
     {
       city: "Tajrish",
@@ -15,12 +15,12 @@ export default function Page() {
       imageUrl: "/img/landing/restaurant.jpg",
       imageAlt: "Restaurant in Malibu",
       description: "in Malibu",
-      propertyCount: 115,
+      propertyCount: 67,
     },
     {
       city: "In Car",
       description: "Car in London",
-      propertyCount: 115,
+      propertyCount: 250,
       imageUrl: "/img/landing/london.jpg",
       imageAlt: "Car in London",
     },
@@ -41,13 +41,13 @@ export default function Page() {
     {
       city: "Rome",
       description: "Rome in Italy",
-      propertyCount: 47,
+      propertyCount: 30,
       imageUrl: "/img/landing/rome.jpg",
       imageAlt: "Rome in Italy",
     },
   ];
 
-  const sizeClasses = {
+  const destinationImgSizeClasses = {
     height: "h-32",
     width: "w-32",
   };
@@ -59,7 +59,7 @@ export default function Page() {
             <img className="h-10" src="/img/logo.svg" alt="VasatYab" />
             <img
               className="mt-6 rounded-lg shadow-xl sm:mt-8 sm:h-64 sm:w-full sm:object-cover object-center lg:hidden"
-              src={`/img/landing/baner/${imageName}.jpg`}
+              src={`/img/landing/baner/${imageRandom}.jpg`}
               alt="baner"
             />
             <h1 className="mt-6 text-2xl font-headline tracking-tight font-semibold text-gray-900 sm:mt-8 sm:text-4xl lg:text-3xl xl:text-4xl">
@@ -69,14 +69,13 @@ export default function Page() {
             </h1>
             <p className="mt-2 text-gray-600 sm:mt-4 sm:text-xl">
               Never fight over location again! VasatYab instantly finds the
-              perfect meeting spot for you and your friends, no matter where you
-              are.
+              perfect meeting spot for you and your friends.
             </p>
             <div className="mt-4 space-x-1 sm:mt-6">
               <Link
-                className="inline-block px-5 py-3 rounded-lg transform transition bg-brand hover:bg-brand-light hover:-translate-y-0.5 focus:ring-brand focus:ring-opacity-50 focus:outline-none focus:ring focus:ring-offset-2 active:bg-brand-dark uppercase tracking-wider font-semibold text-sm text-white shadow-lg sm:text-base"
+                className="inline-block px-5 py-3 rounded-lg transform transition bg-brand hover:bg-brand-light hover:-translate-y-0.5 focus:ring-brand focus:ring-opacity-50 focus:outline-none focus:ring focus:ring-offset-2 active:bg-brand-dark uppercase tracking-wider font-bold text-sm text-white shadow-lg sm:text-base"
                 href="/auth/login">
-                start using!
+                start using
               </Link>
             </div>
           </div>
@@ -84,7 +83,7 @@ export default function Page() {
         <div className="hidden relative lg:block 2xl:col-span-3">
           <img
             className="absolute inset-0 w-full h-full object-cover object-center"
-            src={`/img/landing/baner/${imageName}.jpg`}
+            src={`/img/landing/baner/${imageRandom}.jpg`}
             alt="baner"
           />
         </div>
@@ -93,7 +92,7 @@ export default function Page() {
         <h2 className="text-xl text-gray-900">Popular destinations</h2>
         <p className="mt-2 text-gray-600">
           Simply enter two addresses, and we'll find the exact geographical
-          midpoint.no matter where are you.
+          midpoint, No matter where are you.
         </p>
         <div className="mt-6 grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
           {popularDestinations.map((destination) => (
@@ -101,7 +100,7 @@ export default function Page() {
               className="flex items-center rounded-lg bg-white shadow-lg overflow-hidden"
               key={destination.city}>
               <img
-                className={`${sizeClasses.height} ${sizeClasses.width} flex-shrink-0`}
+                className={`${destinationImgSizeClasses.height} ${destinationImgSizeClasses.width} flex-shrink-0`}
                 src={destination.imageUrl}
                 alt={destination.imageAlt}
               />
