@@ -6,7 +6,7 @@ export const SettingsSchema = z
     name: z.optional(z.string()),
     isTwoFactorEnabled: z.optional(z.boolean()),
     role: z.enum([UserRole.ADMIN, UserRole.USER]),
-    email: z.optional(z.string().email()),
+    email: z.optional(z.string().toLowerCase().email()),
     password: z.optional(z.string().min(6)),
     newPassword: z.optional(z.string().min(6)),
   })
@@ -21,7 +21,7 @@ export const SettingsSchema = z
     {
       message: "New password is required!",
       path: ["newPassword"],
-    },
+    }
   )
   .refine(
     (data) => {
@@ -34,7 +34,7 @@ export const SettingsSchema = z
     {
       message: "Password is required!",
       path: ["password"],
-    },
+    }
   );
 
 export const NewPasswordSchema = z.object({
@@ -44,13 +44,13 @@ export const NewPasswordSchema = z.object({
 });
 
 export const ResetSchema = z.object({
-  email: z.string().email({
+  email: z.string().toLowerCase().email({
     message: "Email is required",
   }),
 });
 
 export const LoginSchema = z.object({
-  email: z.string().email({
+  email: z.string().toLowerCase().email({
     message: "Email is required",
   }),
   password: z.string().min(1, {
@@ -60,7 +60,7 @@ export const LoginSchema = z.object({
 });
 
 export const RegisterSchema = z.object({
-  email: z.string().email({
+  email: z.string().toLowerCase().email({
     message: "Email is required",
   }),
   password: z.string().min(6, {
