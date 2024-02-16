@@ -10,7 +10,7 @@ export const Navbar = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="bg-secondary flex justify-between items-center p-4 rounded-xl shadow-sm top-0 fixed z-[3000] mt-16">
+    <nav className="bg-secondary flex justify-between items-center p-4 rounded-xl shadow-sm top-0 fixed z-[3000] mt-8">
       <div className="flex gap-x-2">
         <Button
           asChild

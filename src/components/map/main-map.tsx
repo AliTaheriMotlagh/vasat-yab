@@ -16,8 +16,8 @@ export default function MainMap() {
         }}
         mapboxAccessToken={mapboxToken}
         mapStyle="mapbox://styles/mapbox/streets-v12">
-        <NavigationControl position="top-left" />
-        <GeolocateControl position="top-left" />
+        <NavigationControl position="bottom-left" />
+        <GeolocateControl position="bottom-left" />
       </Map>
     </main>
   );
