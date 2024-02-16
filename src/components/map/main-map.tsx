@@ -12,15 +12,15 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import Pin from "@/components/map/pin";
 import ControlPanel from "@/components/map/control-panel";
 
-const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || "";
-
-const initialViewState = {
-  latitude: 35.74822109417478,
-  longitude: 51.186489879312425,
-  zoom: 14,
-};
-
 export default function MainMap() {
+  const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || "";
+
+  const initialViewState = {
+    latitude: 35.74822109417478,
+    longitude: 51.186489879312425,
+    zoom: 14,
+  };
+
   const [marker, setMarker] = useState({
     latitude: 35.74822109417478,
     longitude: 51.186489879312425,
