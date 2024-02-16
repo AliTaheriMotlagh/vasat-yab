@@ -1,31 +1,17 @@
 "use client";
-
 import { useState, useCallback } from "react";
-import Map, {
-  GeolocateControl,
-  Marker,
-  MarkerDragEvent,
-  LngLat,
-} from "react-map-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
-
+import Map, { GeolocateControl, Marker } from "react-map-gl";
+import type { MarkerDragEvent, LngLat } from "react-map-gl";
 import Pin from "@/components/map/pin";
 import ControlPanel from "@/components/map/control-panel";
-
-const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || "";
-
-const initialViewState = {
-  latitude: 35.74822109417478,
-  longitude: 51.186489879312425,
-  zoom: 14,
-};
+import { initialViewState, TOKEN } from "./main-map";
 
 export default function MainMap() {
   const [marker, setMarker] = useState({
     latitude: 35.74822109417478,
     longitude: 51.186489879312425,
   });
-  const [events, logEvents] = useState<Record<string, LngLat | any>>({}); // TODO: remove any here
+  const [events, logEvents] = useState<Record<string, LngLat>>({});
 
   const onMarkerDragStart = useCallback((event: MarkerDragEvent) => {
     logEvents((_events) => ({ ..._events, onDragStart: event.lngLat }));

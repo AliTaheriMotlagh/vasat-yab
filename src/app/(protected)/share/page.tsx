@@ -1,6 +1,4 @@
-"use client";
-
-import MainMap from "@/components/map/main-map";
+import MainMap from "@/components/map/MainMap";
 
 const SharePage = () => {
   return <MainMap />;
