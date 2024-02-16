@@ -60,7 +60,7 @@ export default function MainMap() {
           onDragEnd={onMarkerDragEnd}>
           <Pin size={20} />
         </Marker>
-        <GeolocateControl position="bottom-right" />
+        <GeolocateControl showAccuracyCircle={false} position="bottom-right" />
       </Map>
       <ControlPanel events={events} />
     </main>
