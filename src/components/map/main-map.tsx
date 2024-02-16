@@ -5,6 +5,7 @@ import Map, { GeolocateControl, Marker, ViewState } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 import Pin from "@/components/map/pin";
+import GeocoderControl from "@/components/map/geocoder-control";
 
 export default function MainMap() {
   const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || "";
@@ -42,6 +43,7 @@ export default function MainMap() {
           <Pin size={20} />
         </Marker>
         <GeolocateControl showAccuracyCircle={false} position="bottom-right" />
+        <GeocoderControl mapboxAccessToken={TOKEN} position="top-left" />
       </Map>
     </main>
   );
