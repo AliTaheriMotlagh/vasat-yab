@@ -10,7 +10,7 @@ export const Navbar = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="bg-secondary flex justify-between items-center p-4 rounded-xl shadow-sm ">
+    <nav className="bg-secondary flex justify-between items-center p-4 rounded-xl shadow-sm top-0 fixed z-[3000] mt-16">
       <div className="flex gap-x-2">
         <Button
           asChild
@@ -24,6 +24,9 @@ export const Navbar = () => {
         </Button>
         <Button asChild variant={pathname === "/admin" ? "default" : "outline"}>
           <Link href="/admin">Admin</Link>
+        </Button>
+        <Button asChild variant={pathname === "/share" ? "default" : "outline"}>
+          <Link href="/share">Map</Link>
         </Button>
         <Button
           asChild
