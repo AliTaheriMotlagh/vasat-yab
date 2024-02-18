@@ -1,7 +1,7 @@
-import MainMap from "@/components/map/main-map";
+import GetLocation from "@/components/map/get-location";
 
 const SharePage = () => {
-  return <MainMap />;
+  return <GetLocation />;
 };
 
 export default SharePage;
