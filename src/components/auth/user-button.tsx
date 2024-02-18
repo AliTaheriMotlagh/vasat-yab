@@ -34,10 +34,12 @@ export const UserButton = () => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="w-40" align="end">
-        <DropdownMenuItem className="cursor-pointer">
-          <GearIcon className="h-4 w-4 mr-2" />
-          <Link href="/settings">Settings</Link>
-        </DropdownMenuItem>
+        <Link href="/settings" className="cursor-pointer">
+          <DropdownMenuItem>
+            <GearIcon className="h-4 w-4 mr-2" />
+            Settings
+          </DropdownMenuItem>
+        </Link>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="cursor-pointer" onClick={onLogoutClick}>
           <ExitIcon className="h-4 w-4 mr-2" />
