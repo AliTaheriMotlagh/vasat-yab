@@ -55,7 +55,7 @@ export default function MainMap() {
           position="bottom-right"
           ref={geoControlRef}
         />
-        <GeocoderControl mapboxAccessToken={TOKEN} position="bottom-right" />
+        <GeocoderControl mapboxAccessToken={TOKEN} position="top-right" />
       </Map>
     </main>
   );
