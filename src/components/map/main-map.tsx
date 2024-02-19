@@ -56,8 +56,6 @@ export default function MainMap() {
     <div className="w-full h-full">
       <Map
         dragPan={!isSet}
-        onDrag={(evt) => onMapDrag(evt.viewState)}
-        onZoom={(evt) => onMapDrag(evt.viewState)}
         onMove={(evt) => onMapDrag(evt.viewState)}
         onLoad={() => {
           geoControlRef.current?.trigger();
