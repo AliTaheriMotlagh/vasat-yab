@@ -14,10 +14,10 @@ const AvatarIcon = ({ src, size, className }: AvatarIconProp) => {
       <Avatar
         className={cn(
           `${className}`,
-          size ? `h-[${size}px] w-[${size}px]` : "h-14 w-14"
+          size ? `h-[${size}px] w-[${size}px]` : "h-14 w-14",
         )}
       >
-        <AvatarImage src={src || ""} />
+        <AvatarImage src={src} />
         <AvatarFallback className="bg-sky-500">
           <User2 className="text-white" />
         </AvatarFallback>

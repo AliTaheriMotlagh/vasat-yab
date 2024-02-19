@@ -10,15 +10,6 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import UserCard from "./user-card";
@@ -28,6 +19,15 @@ import { type User } from "@prisma/client";
 import { useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useMediaQuery } from "usehooks-ts";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 interface InviteFriendsModalProp {
   children: React.ReactNode;
@@ -47,32 +47,47 @@ const InviteFriendsModal = ({
 
   const maxVisibleUser = 5;
 
-  const handleClickOnUser = (userId: string) => {
-    if (selectedUsers.includes(userId)) {
-      setSelectedUsers(selectedUsers.filter((item) => item !== userId));
-    } else setSelectedUsers([...selectedUsers, userId]);
+  const selectUser = (userId: string) => {
+    setSelectedUsers([...selectedUsers, userId]);
+  };
+
+  const deselectUser = (userId: string) => {
+    setSelectedUsers(selectedUsers.filter((item) => item !== userId));
+  };
+
+  const handleToggleSelectUser = (userId: string) => {
+    if (!selectedUsers.includes(userId)) {
+      selectUser(userId);
+    } else {
+      deselectUser(userId);
+    }
+  };
+
+  const reset = () => {
+    setSelectedUsers([]);
+  };
+
+  const isUsersSelect = (userId: string): boolean => {
+    return selectedUsers.includes(userId);
+  };
+
+  const getUserInfo = (userId: string) => {
+    return users.find((i) => i.id === userId);
   };
 
   return (
     <>
       {isDesktop ? (
-        <Dialog
-          onOpenChange={() => {
-            setSelectedUsers([]);
-          }}
-        >
+        <Dialog onOpenChange={reset}>
           <DialogTrigger>{children}</DialogTrigger>
-          <DialogContent className="px-0 pb-0 pt-4">
+          <DialogContent className="px-0 pb-2 pt-4">
             <DialogHeader className="px-5">
               <DialogTitle>{title}</DialogTitle>
               <DialogDescription>{description}</DialogDescription>
             </DialogHeader>
             <div className="mt-3 flex w-full flex-col">
               <div className="flex items-center gap-x-2 border-y-[3px] px-4 py-3">
-                <Button variant={"ghost"}>
-                  <Search />
-                </Button>
-
+                <Search />
                 <Input
                   placeholder="Search users"
                   className="border-0 text-lg shadow-none focus:outline-0 focus-visible:ring-0"
@@ -84,16 +99,11 @@ const InviteFriendsModal = ({
                   return (
                     <div
                       onClick={() => {
-                        handleClickOnUser(user.id);
+                        handleToggleSelectUser(user.id);
                       }}
                       key={user.id}
                     >
-                      <UserCard
-                        checked={selectedUsers.includes(user.id)}
-                        userName={user.name!}
-                        userEmail={user.email!}
-                        userImageUrl={user.image!}
-                      />
+                      <UserCard checked={isUsersSelect(user.id)} user={user} />
                     </div>
                   );
                 })}
@@ -102,22 +112,18 @@ const InviteFriendsModal = ({
             <DialogFooter className="flex h-16 w-full justify-center px-2 pb-0">
               <div className="relative flex h-full w-full items-center justify-between py-4">
                 <div className="flex">
-                  {users
-                    .filter(
-                      (item, idx) => selectedUsers.includes(item.id) && idx < 5,
-                    )
-                    .map((user) => {
-                      return (
-                        <AvatarIcon
-                          src={user.image!}
-                          className="-mr-5 border-4 border-background"
-                        />
-                      );
-                    })}
-                  {selectedUsers.length > 5 && (
+                  {selectedUsers.slice(0, maxVisibleUser).map((user) => {
+                    return (
+                      <AvatarIcon
+                        src={getUserInfo(user)?.image!}
+                        className="-mr-5 border-4 border-background"
+                      />
+                    );
+                  })}
+                  {selectedUsers.length > maxVisibleUser && (
                     <>
                       <div className="z-50 flex h-14  w-14 items-center justify-center rounded-full bg-slate-200">
-                        +{selectedUsers.length - 5}
+                        + {selectedUsers.length - maxVisibleUser}
                       </div>
                     </>
                   )}
@@ -128,7 +134,7 @@ const InviteFriendsModal = ({
           </DialogContent>
         </Dialog>
       ) : (
-        <Drawer onClose={() => setSelectedUsers([])}>
+        <Drawer onClose={reset}>
           <DrawerTrigger>{children}</DrawerTrigger>
           <DrawerContent className="px-0 pb-2 pt-4">
             <DrawerHeader className="px-5">
@@ -149,16 +155,11 @@ const InviteFriendsModal = ({
                   return (
                     <div
                       onClick={() => {
-                        handleClickOnUser(user.id);
+                        handleToggleSelectUser(user.id);
                       }}
                       key={user.id}
                     >
-                      <UserCard
-                        checked={selectedUsers.includes(user.id)}
-                        userName={user.name!}
-                        userEmail={user.email!}
-                        userImageUrl={user.image!}
-                      />
+                      <UserCard checked={isUsersSelect(user.id)} user={user} />
                     </div>
                   );
                 })}
@@ -167,23 +168,18 @@ const InviteFriendsModal = ({
             <DrawerFooter className="flex h-16 w-full justify-center px-2 pb-0">
               <div className="relative flex h-full w-full items-center justify-between py-4">
                 <div className="flex">
-                  {users
-                    .filter(
-                      (item, idx) =>
-                        selectedUsers.includes(item.id) && idx < maxVisibleUser,
-                    )
-                    .map((user) => {
-                      return (
-                        <AvatarIcon
-                          src={user.image!}
-                          className="-mr-5 border-4 border-background"
-                        />
-                      );
-                    })}
+                  {selectedUsers.slice(0, maxVisibleUser).map((user) => {
+                    return (
+                      <AvatarIcon
+                        src={getUserInfo(user)?.image!}
+                        className="-mr-5 border-4 border-background"
+                      />
+                    );
+                  })}
                   {selectedUsers.length > maxVisibleUser && (
                     <>
                       <div className="z-50 flex h-14  w-14 items-center justify-center rounded-full bg-slate-200">
-                        +{selectedUsers.length - maxVisibleUser}
+                        + {selectedUsers.length - maxVisibleUser}
                       </div>
                     </>
                   )}

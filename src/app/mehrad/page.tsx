@@ -86,7 +86,7 @@ const Page = () => {
         title="Create channel"
         description="all users in chanle are can see your location"
       >
-        ⭐
+        ⭐click
       </InviteFriendsModal>
     </>
   );

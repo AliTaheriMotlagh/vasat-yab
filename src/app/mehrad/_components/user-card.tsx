@@ -1,31 +1,24 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { type User } from "@prisma/client";
 import AvatarIcon from "./avatar-icon";
 import { Check } from "lucide-react";
 
 interface UserCardProp {
-  userImageUrl: string;
-  userName: string;
-  userEmail: string;
+  user: User;
   checked: boolean;
 }
 
-const UserCard = ({
-  userEmail,
-  userImageUrl,
-  userName,
-  checked,
-}: UserCardProp) => {
+const UserCard = ({ user, checked }: UserCardProp) => {
   return (
     <>
-      <div className="flex h-16 bg-background justify-between hover:bg-secondary pl-2 pr-5 py-1 items-center">
+      <div className="flex h-16 items-center justify-between bg-background py-1 pl-2 pr-5 hover:bg-secondary">
         <div className="flex items-center">
-          <AvatarIcon src={userImageUrl} />
-          <div className="flex flex-col ml-2">
-            <p className="font-bold">{userName}</p>
-            <span className="line-clamp-1">{userEmail}</span>
+          <AvatarIcon src={user.image!} />
+          <div className="ml-2 flex flex-col">
+            <p className="font-bold">{user.name}</p>
+            <span className="line-clamp-1">{user.email}</span>
           </div>
         </div>
-        {checked && <Check />}
+        <span>{checked && <Check />}</span>
       </div>
     </>
   );
