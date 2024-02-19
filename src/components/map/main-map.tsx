@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
-import Map, { GeolocateControl, Marker, ViewState } from "react-map-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
-
+import Map, { GeolocateControl, LngLat, Marker, ViewState } from "react-map-gl";
 import Pin from "@/components/map/pin";
 import GeocoderControl from "@/components/map/geocoder-control";
+
+import "mapbox-gl/dist/mapbox-gl.css";
+import { useCurrentLocation } from "@/store/use-current-location";
+import { useLocation } from "@/store/use-location";
 
 export default function MainMap() {
   const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || "";
@@ -17,8 +19,8 @@ export default function MainMap() {
   };
 
   const [marker, setMarker] = useState({
-    latitude: 35.74822109417478,
-    longitude: 51.186489879312425,
+    latitude: 0,
+    longitude: 0,
   });
 
   const onMapDrag = useCallback((event: ViewState) => {
@@ -27,11 +29,27 @@ export default function MainMap() {
       latitude: event.latitude,
     });
   }, []);
+
   const geoControlRef = useRef<mapboxgl.GeolocateControl>(null);
 
+  const updateCoordinate = useCurrentLocation(
+    (state) => state.updateCoordinate
+  );
+
+  const { isSet, onCancel, onSet } = useLocation((state) => state);
+
+  useEffect(() => {
+    updateCoordinate({
+      latitude: marker.latitude,
+      longitude: marker.longitude,
+    });
+  }, [isSet]);
+  //TODO maybe in one component should have all functionality and after being work split that
+
   return (
-    <main className="w-full h-full">
+    <div className="w-full h-full">
       <Map
+        dragPan={!isSet}
         onDrag={(evt) => onMapDrag(evt.viewState)}
         onZoom={(evt) => onMapDrag(evt.viewState)}
         onMove={(evt) => onMapDrag(evt.viewState)}
@@ -57,6 +75,6 @@ export default function MainMap() {
         />
         <GeocoderControl mapboxAccessToken={TOKEN} position="top-right" />
       </Map>
-    </main>
+    </div>
   );
 }

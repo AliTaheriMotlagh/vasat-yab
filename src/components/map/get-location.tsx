@@ -1,9 +1,19 @@
 import MainMap from "@/components/map/main-map";
 
+import ToolBox from "./tool-box";
+
+//TODO Clean
 const GetLocation = () => {
   return (
     <>
-      <MainMap></MainMap>
+      <div className="flex flex-col gap-4">
+        <div className="h-[400px] md:h-[600px] lg:h-[800px]">
+          <MainMap></MainMap>
+        </div>
+        <div>
+          <ToolBox></ToolBox>
+        </div>
+      </div>
     </>
   );
 };
