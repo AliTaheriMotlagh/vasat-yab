@@ -19,9 +19,6 @@ const ToolBox = () => {
   };
   return (
     <>
-      <h1>
-        {coordinate.latitude}-{coordinate.longitude}
-      </h1>
       <Card className="p-4 m-4">
         <Button
           onClick={getLoc}

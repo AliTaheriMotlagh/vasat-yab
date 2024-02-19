@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+body
+  > div
+  > div
+  > div
+  > div.h-\[400px\].md\:h-\[600px\].lg\:h-\[800px\]
+  > div
+  > div
+  > div.mapboxgl-canvas-container.mapboxgl-interactive.mapboxgl-touch-zoom-rotate
+  > div.mapboxgl-marker.mapboxgl-marker-anchor-bottom
+  > svg {
+  display: none;
+  /* Todo: Delete this Immediately */
+}
+
 html,
 body,
 :root {
