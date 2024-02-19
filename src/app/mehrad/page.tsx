@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import InviteFriendsModal from "./_components/invite-friends-modal";
 
 const users = [
@@ -84,7 +83,7 @@ const Page = () => {
       <InviteFriendsModal
         users={users}
         title="Create channel"
-        description="all users in chanle are can see your location"
+        description="all users in chanel are can see your location"
       >
         ⭐click
       </InviteFriendsModal>

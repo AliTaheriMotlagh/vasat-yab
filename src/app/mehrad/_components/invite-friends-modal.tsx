@@ -16,7 +16,7 @@ import UserCard from "./user-card";
 import AvatarIcon from "./avatar-icon";
 import { Button } from "@/components/ui/button";
 import { type User } from "@prisma/client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useMediaQuery } from "usehooks-ts";
 import {
@@ -42,6 +42,7 @@ const InviteFriendsModal = ({
   description,
   users,
 }: InviteFriendsModalProp) => {
+  const closeBtn = useRef<HTMLDivElement>(null);
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
@@ -73,6 +74,10 @@ const InviteFriendsModal = ({
 
   const getUserInfo = (userId: string) => {
     return users.find((i) => i.id === userId);
+  };
+
+  const onSubmit = () => {
+    closeBtn.current?.click();
   };
 
   return (
@@ -128,14 +133,18 @@ const InviteFriendsModal = ({
                     </>
                   )}
                 </div>
-                <Button className="h-14">Continue</Button>
+                <Button className="h-14" onClick={onSubmit}>
+                  Continue
+                </Button>
               </div>
             </DialogFooter>
           </DialogContent>
         </Dialog>
       ) : (
         <Drawer onClose={reset}>
-          <DrawerTrigger>{children}</DrawerTrigger>
+          <DrawerTrigger>
+            <div ref={closeBtn}>{children}</div>
+          </DrawerTrigger>
           <DrawerContent className="px-0 pb-2 pt-4">
             <DrawerHeader className="px-5">
               <DrawerTitle>{title}</DrawerTitle>
@@ -184,7 +193,9 @@ const InviteFriendsModal = ({
                     </>
                   )}
                 </div>
-                <Button className="h-14">Continue</Button>
+                <Button className="h-14" onClick={onSubmit}>
+                  Continue
+                </Button>
               </div>
             </DrawerFooter>
           </DrawerContent>
