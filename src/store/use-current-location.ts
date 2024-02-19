@@ -6,15 +6,21 @@ interface ILngLat {
 }
 
 interface ICurrentLocation {
-  coordinate: ILngLat; //TODO One Store have cordinate and state of isSet
+  coordinate: ILngLat;
+  isCoordinateSet: boolean;
   updateCoordinate: (newCoordinate: ILngLat) => void;
+  removeCoordinate: () => void;
 }
 
 export const useCurrentLocation = create<ICurrentLocation>((set, get) => ({
   coordinate: { latitude: 0, longitude: 0 },
+  isCoordinateSet: false,
   updateCoordinate: (newCoordinate: ILngLat) => {
-    const coordinateState = get().coordinate;
-
-    set({ coordinate: newCoordinate });
+    set({ coordinate: newCoordinate, isCoordinateSet: true });
   },
+  removeCoordinate: () =>
+    set(() => ({
+      coordinate: { latitude: 0, longitude: 0 },
+      isCoordinateSet: false,
+    })),
 }));
