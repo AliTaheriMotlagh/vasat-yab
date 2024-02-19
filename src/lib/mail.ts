@@ -29,7 +29,7 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
   await sendMail(
     email,
     "Reset your password",
-    `<p>Click <a href="${resetLink}">here</a> to reset password.</p>`
+    `<p>Click <a href="${resetLink}">here</a> to reset password.</p>`,
   );
 };
 
@@ -39,6 +39,6 @@ export const sendVerificationEmail = async (email: string, token: string) => {
   await sendMail(
     email,
     "Confirm your email",
-    `<p>Click <a href="${confirmLink}">here</a> to confirm email.</p>`
+    `<p>Click <a href="${confirmLink}">here</a> to confirm email.</p>`,
   );
 };

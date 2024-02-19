@@ -34,7 +34,7 @@ export default function MainMap() {
   const geoControlRef = useRef<mapboxgl.GeolocateControl>(null);
 
   const updateCoordinate = useCurrentLocation(
-    (state) => state.updateCoordinate
+    (state) => state.updateCoordinate,
   );
   const coordinate = useCurrentLocation((state) => state.coordinate);
 
@@ -53,7 +53,7 @@ export default function MainMap() {
   const user = useCurrentUser();
 
   return (
-    <div className="w-full h-full">
+    <div className="h-full w-full">
       <Map
         dragPan={!isSet}
         onMove={(evt) => onMapDrag(evt.viewState)}
@@ -63,12 +63,14 @@ export default function MainMap() {
         initialViewState={initialViewState}
         mapStyle="mapbox://styles/mapbox/streets-v12"
         mapboxAccessToken={TOKEN}
-        attributionControl={false}>
+        attributionControl={false}
+      >
         {!isSet && (
           <Marker
             longitude={marker.longitude}
             latitude={marker.latitude}
-            anchor="center">
+            anchor="center"
+          >
             <Pin size={20} />
           </Marker>
         )}
@@ -87,7 +89,8 @@ export default function MainMap() {
               borderRadius: "50%",
               cursor: "pointer",
               padding: 0,
-            }}></Marker>
+            }}
+          ></Marker>
         )}
         <GeolocateControl
           showAccuracyCircle={false}

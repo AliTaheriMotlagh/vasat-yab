@@ -34,7 +34,7 @@ export default function GeocoderControl(props: GeocoderControlProps) {
     },
     {
       position: props.position,
-    }
+    },
   );
   return null;
 }

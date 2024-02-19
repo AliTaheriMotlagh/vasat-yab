@@ -53,16 +53,16 @@ export default function Page() {
   };
   return (
     <div>
-      <div className="bg-gray-100 grid lg:grid-cols-2 2xl:grid-cols-5">
-        <div className="px-8 py-12 max-w-md mx-auto sm:max-w-xl lg:px-12 lg:py-24 lg:max-w-full xl:mr-0 2xl:col-span-2">
+      <div className="grid bg-gray-100 lg:grid-cols-2 2xl:grid-cols-5">
+        <div className="mx-auto max-w-md px-8 py-12 sm:max-w-xl lg:max-w-full lg:px-12 lg:py-24 xl:mr-0 2xl:col-span-2">
           <div className="xl:max-w-xl">
             <img className="h-10" src="/img/logo.svg" alt="VasatYab" />
             <img
-              className="mt-6 rounded-lg shadow-xl sm:mt-8 sm:h-64 sm:w-full sm:object-cover object-center lg:hidden"
+              className="mt-6 rounded-lg object-center shadow-xl sm:mt-8 sm:h-64 sm:w-full sm:object-cover lg:hidden"
               src={`/img/landing/baner/${imageRandom}.jpg`}
               alt="baner"
             />
-            <h1 className="mt-6 text-2xl font-headline tracking-tight font-semibold text-gray-900 sm:mt-8 sm:text-4xl lg:text-3xl xl:text-4xl">
+            <h1 className="font-headline mt-6 text-2xl font-semibold tracking-tight text-gray-900 sm:mt-8 sm:text-4xl lg:text-3xl xl:text-4xl">
               Find the perfect meeting spot.
               <br className="hidden lg:inline" />{" "}
               <span className="text-brand">The midpoint calculator</span>
@@ -73,22 +73,23 @@ export default function Page() {
             </p>
             <div className="mt-4 space-x-1 sm:mt-6">
               <Link
-                className="inline-block px-5 py-3 rounded-lg transform transition bg-brand hover:bg-brand-light hover:-translate-y-0.5 focus:ring-brand focus:ring-opacity-50 focus:outline-none focus:ring focus:ring-offset-2 active:bg-brand-dark uppercase tracking-wider font-bold text-sm text-white shadow-lg sm:text-base"
-                href="/auth/login">
+                className="inline-block transform rounded-lg bg-brand px-5 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-brand-light focus:outline-none focus:ring focus:ring-brand focus:ring-opacity-50 focus:ring-offset-2 active:bg-brand-dark sm:text-base"
+                href="/auth/login"
+              >
                 start using
               </Link>
             </div>
           </div>
         </div>
-        <div className="hidden relative lg:block 2xl:col-span-3">
+        <div className="relative hidden lg:block 2xl:col-span-3">
           <img
-            className="absolute inset-0 w-full h-full object-cover object-center"
+            className="absolute inset-0 h-full w-full object-cover object-center"
             src={`/img/landing/baner/${imageRandom}.jpg`}
             alt="baner"
           />
         </div>
       </div>
-      <div className="max-w-md sm:max-w-xl lg:max-w-6xl mx-auto px-8 lg:px-12 py-8">
+      <div className="mx-auto max-w-md px-8 py-8 sm:max-w-xl lg:max-w-6xl lg:px-12">
         <h2 className="text-xl text-gray-900">Popular destinations</h2>
         <p className="mt-2 text-gray-600">
           Simply enter two addresses, and we'll find the exact geographical
@@ -97,8 +98,9 @@ export default function Page() {
         <div className="mt-6 grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
           {popularDestinations.map((destination) => (
             <div
-              className="flex items-center rounded-lg bg-white shadow-lg overflow-hidden"
-              key={destination.city}>
+              className="flex items-center overflow-hidden rounded-lg bg-white shadow-lg"
+              key={destination.city}
+            >
               <img
                 className={`${destinationImgSizeClasses.height} ${destinationImgSizeClasses.width} flex-shrink-0`}
                 src={destination.imageUrl}
@@ -113,7 +115,8 @@ export default function Page() {
                 <div className="mt-4">
                   <Link
                     href="/auth/login"
-                    className="text-brand-dark hover:text-brand font-semibold text-sm">
+                    className="text-sm font-semibold text-brand-dark hover:text-brand"
+                  >
                     Explore {destination.propertyCount} properties
                   </Link>
                 </div>

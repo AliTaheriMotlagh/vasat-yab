@@ -71,7 +71,7 @@ const SettingsPage = () => {
   return (
     <Card>
       <CardHeader>
-        <p className="text-2xl font-semibold text-center">⚙️ Settings</p>
+        <p className="text-center text-2xl font-semibold">⚙️ Settings</p>
       </CardHeader>
       <CardContent>
         <Form {...form}>

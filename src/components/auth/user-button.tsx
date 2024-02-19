@@ -36,13 +36,13 @@ export const UserButton = () => {
       <DropdownMenuContent className="w-auto" align="end">
         <Link href="/settings" className="cursor-pointer">
           <DropdownMenuItem>
-            <GearIcon className="h-4 w-4 mr-2 " />
+            <GearIcon className="mr-2 h-4 w-4 " />
             <span>{user?.email}</span>
           </DropdownMenuItem>
         </Link>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="cursor-pointer" onClick={onLogoutClick}>
-          <ExitIcon className="h-4 w-4 mr-2" />
+          <ExitIcon className="mr-2 h-4 w-4" />
           Logout
         </DropdownMenuItem>
       </DropdownMenuContent>

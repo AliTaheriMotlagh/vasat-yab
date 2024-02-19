@@ -28,12 +28,13 @@ const ToolBox = () => {
   };
   return (
     <>
-      <Card className="p-4 m-4">
+      <Card className="m-4 p-4">
         <Drawer>
           <DrawerTrigger className="w-full">
             <Button
               onClick={getLoc}
-              className="w-full rounded-lg transform transition bg-brand hover:bg-brand-light hover:-translate-y-0.5 focus:ring-brand focus:ring-opacity-50 focus:outline-none focus:ring focus:ring-offset-2 uppercase tracking-wider font-bold text-sm text-white shadow-lg sm:text-base">
+              className="w-full transform rounded-lg bg-brand text-sm font-bold uppercase tracking-wider text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-brand-light focus:outline-none focus:ring focus:ring-brand focus:ring-opacity-50 focus:ring-offset-2 sm:text-base"
+            >
               {isSet && <span>Cancel</span>}
               {!isSet && <span>Use This Location</span>}
             </Button>
