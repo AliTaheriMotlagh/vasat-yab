@@ -8,6 +8,7 @@ import { RegisterSchema } from "@/schemas";
 import { getUserByEmail } from "@/data/user";
 import { sendVerificationEmail } from "@/lib/mail";
 import { generateVerificationToken } from "@/lib/tokens";
+import * as crypto from "crypto";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const validatedFields = RegisterSchema.safeParse(values);
@@ -25,11 +26,14 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     return { error: "Email already in use!" };
   }
 
+  const imgUrl = getImageUrlFromEmail(email);
+
   await db.user.create({
     data: {
       name,
       email,
       password: hashedPassword,
+      image: imgUrl,
     },
   });
 
@@ -37,4 +41,9 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   await sendVerificationEmail(verificationToken.email, verificationToken.token);
 
   return { success: "Confirmation email sent!" };
+};
+
+const getImageUrlFromEmail = (email: string) => {
+  const hashEmail = crypto.createHash("md5").update(email).digest("hex");
+  return `https://www.gravatar.com/avatar/${hashEmail}`;
 };

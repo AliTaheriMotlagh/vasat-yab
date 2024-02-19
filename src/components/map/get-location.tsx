@@ -7,7 +7,7 @@ const GetLocation = () => {
   return (
     <>
       <div className="flex flex-col gap-4">
-        <div className="h-[400px] md:h-[600px] lg:h-[800px]">
+        <div className="h-[400px] md:h-[600px]">
           <MainMap></MainMap>
         </div>
         <div>

@@ -33,11 +33,11 @@ export const UserButton = () => {
         </Avatar>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="w-40" align="end">
+      <DropdownMenuContent className="w-auto" align="end">
         <Link href="/settings" className="cursor-pointer">
           <DropdownMenuItem>
-            <GearIcon className="h-4 w-4 mr-2" />
-            Settings
+            <GearIcon className="h-4 w-4 mr-2 " />
+            <span>{user?.email}</span>
           </DropdownMenuItem>
         </Link>
         <DropdownMenuSeparator />

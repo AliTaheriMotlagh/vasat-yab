@@ -1,13 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
-import Map, {
-  GeolocateControl,
-  LngLat,
-  MapRef,
-  Marker,
-  ViewState,
-} from "react-map-gl";
+import Map, { GeolocateControl, Marker, ViewState } from "react-map-gl";
 import Pin from "@/components/map/pin";
 import GeocoderControl from "@/components/map/geocoder-control";
 
@@ -15,13 +9,8 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { useCurrentLocation } from "@/store/use-current-location";
 import { useLocation } from "@/store/use-location";
 import { useCurrentUser } from "@/hooks/use-current-user";
-import mapboxgl from "mapbox-gl";
-import * as crypto from "crypto";
 
 export default function MainMap() {
-  const md5 = (contents: string) =>
-    crypto.createHash("md5").update(contents).digest("hex");
-
   const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || "";
 
   const initialViewState = {
@@ -62,14 +51,6 @@ export default function MainMap() {
   //TODO maybe in one component should have all functionality and after being work split that
 
   const user = useCurrentUser();
-  let imgUrl = ""; //TODO clean this go to save user
-  if (user && !user.image) {
-    const hashEmail = md5(user?.email || "");
-
-    imgUrl = `https://www.gravatar.com/avatar/${hashEmail}`;
-  } else {
-    imgUrl = user?.image || "";
-  }
 
   return (
     <div className="w-full h-full">
@@ -89,7 +70,7 @@ export default function MainMap() {
           <Marker
             longitude={marker.longitude}
             latitude={marker.latitude}
-            anchor="bottom-left">
+            anchor="center">
             <Pin size={20} />
           </Marker>
         )}
@@ -99,7 +80,7 @@ export default function MainMap() {
             latitude={coordinate.latitude}
             anchor="bottom"
             style={{
-              backgroundImage: `url(${imgUrl})`,
+              backgroundImage: `url(${user?.image})`,
               width: `60px`,
               height: `60px`,
               backgroundSize: "100%",

@@ -11,11 +11,6 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
-enum UserRole {
-  ADMIN
-  USER
-}
-
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -24,7 +19,6 @@ model User {
   image         String?
   password      String?
 
-  role                  UserRole               @default(USER)
   isTwoFactorEnabled    Boolean                @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
 

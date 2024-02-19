@@ -31,7 +31,6 @@ import { Input } from "@/components/ui/input";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
-import { UserRole } from "@prisma/client";
 
 const SettingsPage = () => {
   const user = useCurrentUser();
@@ -48,7 +47,6 @@ const SettingsPage = () => {
       newPassword: undefined,
       name: user?.name || undefined,
       email: user?.email || undefined,
-      role: user?.role || undefined,
       isTwoFactorEnabled: user?.isTwoFactorEnabled || undefined,
     },
   });
@@ -154,30 +152,6 @@ const SettingsPage = () => {
                   />
                 </>
               )}
-              <FormField
-                control={form.control}
-                name="role"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Role</FormLabel>
-                    <Select
-                      disabled={isPending}
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a role" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value={UserRole.ADMIN}>Admin</SelectItem>
-                        <SelectItem value={UserRole.USER}>User</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
               {user?.isOAuth === false && (
                 <FormField
                   control={form.control}

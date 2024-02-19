@@ -1,5 +1,4 @@
 import NextAuth from "next-auth";
-import { UserRole } from "@prisma/client";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
 import { db } from "@/lib/db";
@@ -39,7 +38,7 @@ export const {
 
       if (existingUser.isTwoFactorEnabled) {
         const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
-          existingUser.id,
+          existingUser.id
         );
 
         if (!twoFactorConfirmation) return false;
@@ -55,10 +54,6 @@ export const {
     async session({ token, session }) {
       if (token.sub && session.user) {
         session.user.id = token.sub;
-      }
-
-      if (token.role && session.user) {
-        session.user.role = token.role as UserRole;
       }
 
       if (session.user) {
