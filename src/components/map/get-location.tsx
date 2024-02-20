@@ -182,6 +182,8 @@ const GetLocation = () => {
         <div className="h-[400px] md:h-[600px]">
           <div className="h-full w-full">
             <Map
+              doubleClickZoom={!isCoordinateSet}
+              scrollZoom={!isCoordinateSet}
               dragPan={!isCoordinateSet}
               onMove={(evt) => onMapDrag(evt.viewState)}
               onLoad={() => {
