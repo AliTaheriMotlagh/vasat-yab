@@ -5,3 +5,7 @@ export const SearchUserSchema = z.object({
     message: "Email is required",
   }),
 });
+
+export const AddFriendSchema = z.object({
+  friendId: z.string(),
+});

@@ -29,14 +29,18 @@ export const searchUser = async (values: z.infer<typeof SearchUserSchema>) => {
 
   const { email } = validatedFields.data;
 
-  const user = await db.user.findUnique({
+  const searchedUser = await db.user.findUnique({
     where: { email },
     // select: { id: true, email: true, image: true, name: true }, TODO:not all field user
   });
 
-  if (!user) {
-    return { error: "User not found!" };
+  if (!searchedUser) {
+    return { error: "not found!" };
   }
 
-  return { data: user, success: "User is Find." };
+  if (searchedUser.id === dbSelfUser.id) {
+    return { error: "is it your self!" };
+  }
+
+  return { data: searchedUser, success: true };
 };
