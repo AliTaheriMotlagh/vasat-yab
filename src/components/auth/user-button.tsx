@@ -1,7 +1,7 @@
 "use client";
 
 import { FaUser } from "react-icons/fa";
-import { ExitIcon, GearIcon } from "@radix-ui/react-icons";
+import { ExitIcon, GearIcon, HandIcon } from "@radix-ui/react-icons";
 
 import {
   DropdownMenu,
@@ -34,6 +34,13 @@ export const UserButton = () => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="w-auto" align="end">
+        <Link href="/friends" className="cursor-pointer">
+          <DropdownMenuItem>
+            <HandIcon className="mr-2 h-4 w-4" />
+            <span>Friends</span>
+          </DropdownMenuItem>
+        </Link>
+        <DropdownMenuSeparator />
         <Link href="/settings" className="cursor-pointer">
           <DropdownMenuItem>
             <GearIcon className="mr-2 h-4 w-4 " />

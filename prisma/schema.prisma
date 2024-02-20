@@ -23,8 +23,8 @@ model User {
   twoFactorConfirmation TwoFactorConfirmation?
 
   accounts  Account[]
-  Requester Frind[]    @relation("Requester")
-  Accepter  Frind[]    @relation("Accepter")
+  Requester Friend[]   @relation("Requester")
+  Accepter  Friend[]   @relation("Accepter")
   Room      Room[]
   RoomInfo  RoomInfo[]
 }
@@ -84,7 +84,7 @@ model TwoFactorConfirmation {
   @@unique([userId])
 }
 
-model Frind {
+model Friend {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
