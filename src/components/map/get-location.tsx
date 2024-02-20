@@ -134,7 +134,7 @@ const GetLocation = () => {
 
   return (
     <>
-      <div className="flex flex-col gap-4">
+      <div className=" flex flex-col gap-4">
         <div className="h-[400px] md:h-[600px]">
           <div className="h-full w-full">
             <Map
@@ -187,17 +187,17 @@ const GetLocation = () => {
           </div>
         </div>
         <div>
-          <>
-            <Card className="m-4 p-4">
-              <CardHeader>
-                <CardTitle>
-                  Are you absolutely sure this is your location?
-                </CardTitle>
-                <CardDescription>
-                  you are sharing it with your friend!
-                </CardDescription>
-              </CardHeader>
-              <CardFooter>
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                Are you absolutely sure this is your location?
+              </CardTitle>
+              <CardDescription>
+                you are sharing it with your friend!
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex">
                 {!isCoordinateSet && (
                   <Button
                     onClick={() => {
@@ -208,32 +208,30 @@ const GetLocation = () => {
                     <span>Use This Location</span>
                   </Button>
                 )}
-                {isCoordinateSet && (
+              </div>
+              {isCoordinateSet && (
+                <div className="flex flex-col gap-4">
                   <Button
                     onClick={() => {
                       removeCoordinate();
                     }}
                     className="w-full transform rounded-lg bg-red-500 text-sm font-bold uppercase tracking-wider text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-red-400 focus:outline-none focus:ring focus:ring-red-500 focus:ring-opacity-50 focus:ring-offset-2 sm:text-base"
                   >
-                    <span>removeCoordinate This Location</span>
+                    <span>remove This Location</span>
                   </Button>
-                )}
-              </CardFooter>
-            </Card>
-            {isCoordinateSet && (
-              <Card>
-                <CardFooter>
                   <InviteFriendsModal
                     users={users}
                     title="Create channel"
                     description="all users in chanel are can see your location"
                   >
-                    <Button>⭐click</Button>
+                    <Button className="w-full transform rounded-lg  text-sm font-bold uppercase tracking-wider shadow-lg transition hover:-translate-y-0.5  focus:outline-none focus:ring  focus:ring-opacity-50 focus:ring-offset-2 sm:text-base">
+                      ☎️ Add friend
+                    </Button>
                   </InviteFriendsModal>
-                </CardFooter>
-              </Card>
-            )}
-          </>
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </div>
       </div>
     </>
