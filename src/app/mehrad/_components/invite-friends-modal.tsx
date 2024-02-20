@@ -28,6 +28,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import UserList from "./user-list";
+import SelectedUsersList from "./selected-users-list";
+import ModalFooter from "./selected-users-list";
 
 interface InviteFriendsModalProp {
   children: React.ReactNode;
@@ -45,8 +48,6 @@ const InviteFriendsModal = ({
   const closeBtn = useRef<HTMLDivElement>(null);
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const isDesktop = useMediaQuery("(min-width: 768px)");
-
-  const maxVisibleUser = 5;
 
   const selectUser = (userId: string) => {
     setSelectedUsers([...selectedUsers, userId]);
@@ -72,8 +73,12 @@ const InviteFriendsModal = ({
     return selectedUsers.includes(userId);
   };
 
-  const getUserInfo = (userId: string) => {
-    return users.find((i) => i.id === userId);
+  const getUserInfo = (userId: string): User => {
+    const user = users.find((i) => i.id === userId);
+    if (!user) {
+      throw new Error(`User with ID ${userId} not found`);
+    }
+    return user;
   };
 
   const onSubmit = () => {
@@ -84,7 +89,9 @@ const InviteFriendsModal = ({
     <>
       {isDesktop ? (
         <Dialog onOpenChange={reset}>
-          <DialogTrigger>{children}</DialogTrigger>
+          <DialogTrigger>
+            <div ref={isDesktop ? closeBtn : null}>{children}</div>
+          </DialogTrigger>
           <DialogContent className="px-0 pb-2 pt-4">
             <DialogHeader className="px-5">
               <DialogTitle>{title}</DialogTitle>
@@ -99,52 +106,25 @@ const InviteFriendsModal = ({
                   autoComplete="off"
                 />
               </div>
-              <ScrollArea className="mt-3 flex h-[300px] w-full cursor-pointer flex-col">
-                {users.map((user) => {
-                  return (
-                    <div
-                      onClick={() => {
-                        handleToggleSelectUser(user.id);
-                      }}
-                      key={user.id}
-                    >
-                      <UserCard checked={isUsersSelect(user.id)} user={user} />
-                    </div>
-                  );
-                })}
-              </ScrollArea>
+              <UserList
+                click={handleToggleSelectUser}
+                isUsersSelect={isUsersSelect}
+                users={users}
+              />
             </div>
             <DialogFooter className="flex h-16 w-full justify-center px-2 pb-0">
-              <div className="relative flex h-full w-full items-center justify-between py-4">
-                <div className="flex">
-                  {selectedUsers.slice(0, maxVisibleUser).map((userId) => {
-                    return (
-                      <AvatarIcon
-                        src={getUserInfo(userId)?.image!}
-                        key={userId}
-                        className="-mr-5 border-4 border-background"
-                      />
-                    );
-                  })}
-                  {selectedUsers.length > maxVisibleUser && (
-                    <>
-                      <div className="z-50 flex h-14  w-14 items-center justify-center rounded-full bg-slate-200">
-                        + {selectedUsers.length - maxVisibleUser}
-                      </div>
-                    </>
-                  )}
-                </div>
-                <Button className="h-14" onClick={onSubmit}>
-                  Continue
-                </Button>
-              </div>
+              <ModalFooter
+                getUserInfo={getUserInfo}
+                onSubmit={onSubmit}
+                selectedUsers={selectedUsers}
+              />
             </DialogFooter>
           </DialogContent>
         </Dialog>
       ) : (
         <Drawer onClose={reset}>
           <DrawerTrigger>
-            <div ref={closeBtn}>{children}</div>
+            <div ref={!isDesktop ? closeBtn : null}>{children}</div>
           </DrawerTrigger>
           <DrawerContent className="px-0 pb-2 pt-4">
             <DrawerHeader className="px-5">
@@ -160,45 +140,18 @@ const InviteFriendsModal = ({
                   autoComplete="off"
                 />
               </div>
-              <ScrollArea className="mt-3 flex h-[300px] w-full cursor-pointer flex-col">
-                {users.map((user) => {
-                  return (
-                    <div
-                      onClick={() => {
-                        handleToggleSelectUser(user.id);
-                      }}
-                      key={user.id}
-                    >
-                      <UserCard checked={isUsersSelect(user.id)} user={user} />
-                    </div>
-                  );
-                })}
-              </ScrollArea>
+              <UserList
+                click={handleToggleSelectUser}
+                isUsersSelect={isUsersSelect}
+                users={users}
+              />
             </div>
             <DrawerFooter className="flex h-16 w-full justify-center px-2 pb-0">
-              <div className="relative flex h-full w-full items-center justify-between py-4">
-                <div className="flex">
-                  {selectedUsers.slice(0, maxVisibleUser).map((userId) => {
-                    return (
-                      <AvatarIcon
-                        src={getUserInfo(userId)?.image!}
-                        key={userId}
-                        className="-mr-5 border-4 border-background"
-                      />
-                    );
-                  })}
-                  {selectedUsers.length > maxVisibleUser && (
-                    <>
-                      <div className="z-50 flex h-14  w-14 items-center justify-center rounded-full bg-slate-200">
-                        + {selectedUsers.length - maxVisibleUser}
-                      </div>
-                    </>
-                  )}
-                </div>
-                <Button className="h-14" onClick={onSubmit}>
-                  Continue
-                </Button>
-              </div>
+              <ModalFooter
+                getUserInfo={getUserInfo}
+                onSubmit={onSubmit}
+                selectedUsers={selectedUsers}
+              />
             </DrawerFooter>
           </DrawerContent>
         </Drawer>
