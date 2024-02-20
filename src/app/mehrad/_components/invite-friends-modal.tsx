@@ -117,10 +117,11 @@ const InviteFriendsModal = ({
             <DialogFooter className="flex h-16 w-full justify-center px-2 pb-0">
               <div className="relative flex h-full w-full items-center justify-between py-4">
                 <div className="flex">
-                  {selectedUsers.slice(0, maxVisibleUser).map((user) => {
+                  {selectedUsers.slice(0, maxVisibleUser).map((userId) => {
                     return (
                       <AvatarIcon
-                        src={getUserInfo(user)?.image!}
+                        src={getUserInfo(userId)?.image!}
+                        key={userId}
                         className="-mr-5 border-4 border-background"
                       />
                     );
@@ -177,10 +178,11 @@ const InviteFriendsModal = ({
             <DrawerFooter className="flex h-16 w-full justify-center px-2 pb-0">
               <div className="relative flex h-full w-full items-center justify-between py-4">
                 <div className="flex">
-                  {selectedUsers.slice(0, maxVisibleUser).map((user) => {
+                  {selectedUsers.slice(0, maxVisibleUser).map((userId) => {
                     return (
                       <AvatarIcon
-                        src={getUserInfo(user)?.image!}
+                        src={getUserInfo(userId)?.image!}
+                        key={userId}
                         className="-mr-5 border-4 border-background"
                       />
                     );

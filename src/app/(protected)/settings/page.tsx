@@ -7,14 +7,8 @@ import { useTransition, useState } from "react";
 import { useSession } from "next-auth/react";
 
 import { Switch } from "@/components/ui/switch";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { SettingsSchema } from "@/schemas";
+
+import { SettingsSchema } from "@/schemas/auth";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { settings } from "@/actions/settings";
@@ -35,9 +29,9 @@ import { FormSuccess } from "@/components/form-success";
 const SettingsPage = () => {
   const user = useCurrentUser();
 
+  const { update } = useSession();
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
-  const { update } = useSession();
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof SettingsSchema>>({

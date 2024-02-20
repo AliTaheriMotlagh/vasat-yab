@@ -1,6 +1,9 @@
 "use client";
 
-import { useCallback, useRef, useEffect, useState } from "react";
+import * as z from "zod";
+import { useCallback, useRef, useEffect, useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import Map, { GeolocateControl, Marker, ViewState } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -21,6 +24,19 @@ import GeocoderControl from "@/components/map/geocoder-control";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { useCurrentLocation } from "@/store/use-current-location";
 import InviteFriendsModal from "@/app/mehrad/_components/invite-friends-modal";
+import { CreateRoomSchema } from "@/schemas/room";
+import { room } from "@/actions/room";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
+import { Input } from "../ui/input";
+import { FormError } from "../form-error";
+import { FormSuccess } from "../form-success";
 
 const users = [
   {
@@ -98,6 +114,9 @@ const users = [
 ];
 
 const GetLocation = () => {
+  const { coordinate, isCoordinateSet, updateCoordinate, removeCoordinate } =
+    useCurrentLocation((state) => state);
+
   const [marker, setMarker] = useState({
     latitude: 0,
     longitude: 0,
@@ -113,15 +132,40 @@ const GetLocation = () => {
     zoom: 14,
   };
 
-  const { coordinate, isCoordinateSet, updateCoordinate, removeCoordinate } =
-    useCurrentLocation((state) => state);
-
   const onMapDrag = useCallback((event: ViewState) => {
     setMarker({
       longitude: event.longitude,
       latitude: event.latitude,
     });
   }, []);
+
+  const [error, setError] = useState<string | undefined>();
+  const [success, setSuccess] = useState<string | undefined>();
+  const [isPending, startTransition] = useTransition();
+
+  const form = useForm<z.infer<typeof CreateRoomSchema>>({
+    resolver: zodResolver(CreateRoomSchema),
+    defaultValues: {
+      title: undefined,
+      creatorLocation: undefined,
+    },
+  });
+
+  const onSubmit = (values: z.infer<typeof CreateRoomSchema>) => {
+    startTransition(() => {
+      room(values)
+        .then((data) => {
+          if (data.error) {
+            setError(data.error);
+          }
+
+          if (data.success) {
+            setSuccess(data.success);
+          }
+        })
+        .catch(() => setError("Something went wrong!"));
+    });
+  };
 
   useEffect(() => {
     if (isCoordinateSet) {
@@ -228,6 +272,51 @@ const GetLocation = () => {
                       ☎️ Add friend
                     </Button>
                   </InviteFriendsModal>
+                  <div>
+                    <Form {...form}>
+                      <form
+                        className="space-y-6"
+                        onSubmit={form.handleSubmit(onSubmit)}
+                      >
+                        <div className="space-y-4">
+                          <FormField
+                            control={form.control}
+                            name="title"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Title</FormLabel>
+                                <FormControl>
+                                  <Input
+                                    {...field}
+                                    placeholder="John Party"
+                                    disabled={isPending}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={form.control}
+                            name="creatorLocation.latitude"
+                            defaultValue={coordinate.latitude}
+                            render={({ field }) => <></>}
+                          />
+                          <FormField
+                            control={form.control}
+                            name="creatorLocation.longitude"
+                            defaultValue={coordinate.longitude}
+                            render={({ field }) => <></>}
+                          />
+                        </div>
+                        <FormError message={error} />
+                        <FormSuccess message={success} />
+                        <Button disabled={isPending} type="submit">
+                          Save
+                        </Button>
+                      </form>
+                    </Form>
+                  </div>
                 </div>
               )}
             </CardContent>

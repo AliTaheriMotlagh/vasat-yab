@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
@@ -106,9 +106,10 @@ model Room {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  title     String
-  creatorId String
-  vasat     String
+  title          String
+  creatorId      String
+  vasatlongitude Float
+  vasatlatitude  Float
 
   User     User       @relation(fields: [creatorId], references: [id])
   RoomInfo RoomInfo[]
@@ -119,11 +120,12 @@ model RoomInfo {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  roomId       String
-  userId       String
-  userLocation String
-  isAccept     Boolean @default(false)
+  roomId    String
+  userId    String
+  longitude Float
+  latitude  Float
+  isAccept  Boolean @default(false)
 
   User User @relation(fields: [userId], references: [id])
-  Room Room @relation(fields: [roomId], references: [id])
+  Room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
 }
