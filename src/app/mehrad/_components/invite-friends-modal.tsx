@@ -90,7 +90,7 @@ const InviteFriendsModal = ({
       {isDesktop ? (
         <Dialog onOpenChange={reset}>
           <DialogTrigger>
-            <div ref={isDesktop ? closeBtn : null}>{children}</div>
+            <div ref={closeBtn}>{children}</div>
           </DialogTrigger>
           <DialogContent className="px-0 pb-2 pt-4">
             <DialogHeader className="px-5">
@@ -124,7 +124,7 @@ const InviteFriendsModal = ({
       ) : (
         <Drawer onClose={reset}>
           <DrawerTrigger>
-            <div ref={!isDesktop ? closeBtn : null}>{children}</div>
+            <div ref={closeBtn}>{children}</div>
           </DrawerTrigger>
           <DrawerContent className="px-0 pb-2 pt-4">
             <DrawerHeader className="px-5">
