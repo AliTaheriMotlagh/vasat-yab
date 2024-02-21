@@ -20,7 +20,6 @@ export const allFriend = async () => {
 
   const allFriend = await db.friend.findMany({
     where: {
-      isAccept: true,
       accepterId: dbSelfUser.id,
     },
     include: {

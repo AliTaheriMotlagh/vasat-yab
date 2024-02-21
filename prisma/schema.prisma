@@ -22,11 +22,13 @@ model User {
   isTwoFactorEnabled    Boolean                @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
 
-  accounts  Account[]
-  Requester Friend[]   @relation("Requester")
-  Accepter  Friend[]   @relation("Accepter")
-  Room      Room[]
-  RoomInfo  RoomInfo[]
+  accounts                   Account[]
+  FriendRequester            Friend[]        @relation("Requester")
+  FriendAccepter             Friend[]        @relation("Accepter")
+  Room                       Room[]
+  RoomInfo                   RoomInfo[]
+  FriendRequestUserRequester FriendRequest[] @relation("UserRequester")
+  FriendRequestUserTarget    FriendRequest[] @relation("UserTarget")
 }
 
 model Account {
@@ -84,6 +86,23 @@ model TwoFactorConfirmation {
   @@unique([userId])
 }
 
+model FriendRequest {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userRequesterId String
+  userTargetId    String
+  isAccept        Boolean @default(false)
+
+  userRequester User @relation(name: "UserRequester", fields: [userRequesterId], references: [id], onDelete: Cascade)
+  userTarget    User @relation(name: "UserTarget", fields: [userTargetId], references: [id], onDelete: Cascade)
+
+  @@unique([userRequesterId, userTargetId])
+  @@index([userRequesterId])
+  @@index([userTargetId])
+}
+
 model Friend {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
@@ -91,7 +110,6 @@ model Friend {
 
   requesterId String
   accepterId  String
-  isAccept    Boolean @default(false)
 
   requester User @relation(name: "Requester", fields: [requesterId], references: [id], onDelete: Cascade)
   accepter  User @relation(name: "Accepter", fields: [accepterId], references: [id], onDelete: Cascade)

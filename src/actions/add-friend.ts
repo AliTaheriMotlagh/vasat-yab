@@ -51,18 +51,10 @@ export const addFriend = async (values: z.infer<typeof AddFriendSchema>) => {
     return { error: "already requested!" };
   }
 
-  await db.friend.create({
+  await db.friendRequest.create({
     data: {
-      requesterId: dbSelfUser.id,
-      accepterId: friend.id,
-      isAccept: true,
-    },
-  });
-
-  await db.friend.create({
-    data: {
-      requesterId: friend.id,
-      accepterId: dbSelfUser.id,
+      userRequesterId: dbSelfUser.id,
+      userTargetId: friend.id,
       isAccept: false,
     },
   });

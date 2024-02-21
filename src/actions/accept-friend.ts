@@ -44,19 +44,44 @@ export const acceptFriend = async (
 
   const friendship = await db.friend.findFirst({
     where: {
-      requesterId: friend.id,
-      accepterId: dbSelfUser.id,
+      requesterId: dbSelfUser.id,
+      accepterId: friend.id,
+    },
+  });
+
+  if (friendship) {
+    return { error: "Duplicate!" };
+  }
+
+  const friendRequest = await db.friendRequest.findFirst({
+    where: {
+      userRequesterId: friend.id,
+      userTargetId: dbSelfUser.id,
       isAccept: false,
     },
   });
 
-  if (!friendship) {
-    return { error: "not found !" };
+  if (!friendRequest) {
+    return { error: "not found!" };
   }
 
-  await db.friend.update({
+  await db.friend.create({
+    data: {
+      requesterId: friendRequest.userRequesterId,
+      accepterId: friendRequest.userTargetId,
+    },
+  });
+
+  await db.friend.create({
+    data: {
+      requesterId: friendRequest.userTargetId,
+      accepterId: friendRequest.userRequesterId,
+    },
+  });
+
+  await db.friendRequest.update({
     where: {
-      id: friendship.id,
+      id: friendRequest.id,
     },
     data: {
       isAccept: true,

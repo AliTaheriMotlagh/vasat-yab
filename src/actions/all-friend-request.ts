@@ -18,13 +18,13 @@ export const allFriendRequest = async () => {
     return { error: "Unauthorized" };
   }
 
-  const allFriendRequest = await db.friend.findMany({
+  const allFriendRequest = await db.friendRequest.findMany({
     where: {
       isAccept: false,
-      accepterId: dbSelfUser.id,
+      userTargetId: dbSelfUser.id,
     },
     include: {
-      requester: true,
+      userRequester: true,
     },
   });
 
@@ -37,7 +37,7 @@ export const allFriendRequest = async () => {
 
   for (let index = 0; index < allFriendRequest.length; index++) {
     const element = allFriendRequest[index];
-    allFriendRequestUser.push(element.requester);
+    allFriendRequestUser.push(element.userRequester);
   }
 
   return { success: true, data: allFriendRequestUser };
