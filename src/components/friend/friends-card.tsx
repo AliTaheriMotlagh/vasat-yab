@@ -23,7 +23,6 @@ import { Friend, type User } from "@prisma/client";
 import UserCard from "../../app/mehrad/_components/user-card";
 import { addFriend } from "@/actions/add-friend";
 import { allFriend } from "@/actions/all-friend";
-import { getAllFriend } from "@/data/friend";
 import { acceptFriend } from "@/actions/accept-friend";
 import { allFriendRequest } from "@/actions/all-friend-request";
 
