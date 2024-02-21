@@ -144,10 +144,8 @@ export const FriendsCard = () => {
     getAllFriendsRequest();
   }, []);
 
-  const isMyFriend = (friendId: String) => {
-    return !!allFriendsState?.find((item) => {
-      item.id === friendId;
-    });
+  const isMyFriend = (friendId: String): boolean => {
+    return allFriendsState?.some((item) => item.id === friendId);
   };
 
   return (
@@ -195,7 +193,7 @@ export const FriendsCard = () => {
                     <UserCard
                       user={seachedUser!}
                       checked={isMyFriend(seachedUser.id)}
-                      addFriendIcon={true}
+                      addFriendIcon={!isMyFriend(seachedUser.id)}
                     />
                   </span>
                 )}
