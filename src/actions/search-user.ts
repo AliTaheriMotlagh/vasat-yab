@@ -39,7 +39,7 @@ export const searchUser = async (values: z.infer<typeof SearchUserSchema>) => {
   }
 
   if (searchedUser.id === dbSelfUser.id) {
-    return { error: "is it your self!" };
+    return { error: "it your self!" };
   }
 
   return { data: searchedUser, success: true };

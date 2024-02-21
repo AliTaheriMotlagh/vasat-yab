@@ -135,9 +135,6 @@ const GetLocation = () => {
               scrollZoom={!isCoordinateSet}
               dragPan={!isCoordinateSet}
               onMove={(evt) => onMapDrag(evt.viewState)}
-              onLoad={() => {
-                geoControlRef.current?.trigger();
-              }}
               initialViewState={initialViewState}
               mapStyle="mapbox://styles/mapbox/streets-v12"
               mapboxAccessToken={TOKEN}
@@ -176,6 +173,7 @@ const GetLocation = () => {
                 showUserHeading={true}
                 position="bottom-right"
                 ref={geoControlRef}
+                style={{ borderRadius: "100px", padding: "5px" }}
               />
               <GeocoderControl mapboxAccessToken={TOKEN} position="top-right" />
             </Map>
