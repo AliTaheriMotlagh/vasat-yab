@@ -113,6 +113,7 @@ const GetLocation = () => {
 
   useEffect(() => {
     getAllFriends();
+    removeCoordinate();
   }, []);
 
   useEffect(() => {
