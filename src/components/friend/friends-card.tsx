@@ -101,6 +101,8 @@ export const FriendsCard = () => {
           }
           if (data.success) {
             setSuccess(data.success);
+            getAllFriends();
+            getAllFriendsRequest();
           }
         })
         .catch(() => setError("Something went wrong!"));
