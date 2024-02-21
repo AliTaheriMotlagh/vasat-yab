@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 import { getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
 import { AcceptFriendSchema, AddFriendSchema } from "@/schemas/friend";
+import { revalidatePath } from "next/cache";
 
 export const acceptFriend = async (
   values: z.infer<typeof AcceptFriendSchema>,
@@ -87,6 +88,8 @@ export const acceptFriend = async (
       isAccept: true,
     },
   });
+
+  revalidatePath(`/friends`);
 
   return { success: "successfully accept friend request" };
 };
