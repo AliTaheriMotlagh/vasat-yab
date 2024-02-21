@@ -20,8 +20,16 @@ const UserCard = ({ user, checked, addFriendIcon = false }: UserCardProp) => {
               <span className="line-clamp-1">{user.email}</span>
             </div>
           </div>
-          <span>{checked && <Check />}</span>{" "}
-          <span>{addFriendIcon && <Plus />}</span>{" "}
+          {checked && (
+            <span>
+              <Check />
+            </span>
+          )}
+          {addFriendIcon && (
+            <span>
+              <Plus />
+            </span>
+          )}{" "}
           {/* TODO:make it reusable for add request too  */}
         </div>
       )}
