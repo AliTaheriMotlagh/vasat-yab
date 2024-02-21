@@ -9,3 +9,7 @@ export const SearchUserSchema = z.object({
 export const AddFriendSchema = z.object({
   friendId: z.string(),
 });
+
+export const AcceptFriendSchema = z.object({
+  friendId: z.string(),
+});

@@ -24,6 +24,8 @@ import UserCard from "../../app/mehrad/_components/user-card";
 import { addFriend } from "@/actions/add-friend";
 import { allFriend } from "@/actions/all-friend";
 import { getAllFriend } from "@/data/friend";
+import { acceptFriend } from "@/actions/accept-friend";
+import { allFriendRequest } from "@/actions/all-friend-request";
 
 export const FriendsCard = () => {
   const [error, setError] = useState<string | undefined>();
@@ -32,6 +34,9 @@ export const FriendsCard = () => {
 
   const [seachedUser, setSeachedUser] = useState<User | undefined>();
   const [allFriendsState, setAllFriendsState] = useState<User[]>([]);
+  const [allFriendsRequestedState, setallFriendsRequestedState] = useState<
+    User[]
+  >([]);
 
   const form = useForm<z.infer<typeof SearchUserSchema>>({
     resolver: zodResolver(SearchUserSchema),
@@ -84,6 +89,25 @@ export const FriendsCard = () => {
     });
   };
 
+  const onAcceptFriend = (friendId: string) => {
+    setError(undefined);
+    setSuccess(undefined);
+    setSeachedUser(undefined);
+
+    startTransition(() => {
+      acceptFriend({ friendId })
+        .then((data) => {
+          if (data.error) {
+            setError(data.error);
+          }
+          if (data.success) {
+            setSuccess(data.success);
+          }
+        })
+        .catch(() => setError("Something went wrong!"));
+    });
+  };
+
   const getAllFriends = async () => {
     startTransition(() => {
       allFriend()
@@ -100,8 +124,25 @@ export const FriendsCard = () => {
     });
   };
 
+  const getAllFriendsRequest = async () => {
+    startTransition(() => {
+      allFriendRequest()
+        .then((data) => {
+          if (data.error) {
+            setError(data.error);
+          }
+
+          if (data.success) {
+            setallFriendsRequestedState(data.data);
+          }
+        })
+        .catch(() => setError("Something went wrong!"));
+    });
+  };
+
   useEffect(() => {
     getAllFriends();
+    getAllFriendsRequest();
   }, []);
 
   const isMyFriend = (friendId: String) => {
@@ -149,9 +190,9 @@ export const FriendsCard = () => {
                   </Button>
                 </form>
               </Form>
-              <div className=" cursor-pointer">
+              <div>
                 {seachedUser && (
-                  <span onClick={onAddFriend}>
+                  <span onClick={onAddFriend} className=" cursor-pointer">
                     <UserCard
                       user={seachedUser!}
                       checked={isMyFriend(seachedUser.id)}
@@ -163,6 +204,32 @@ export const FriendsCard = () => {
               <FormError message={error} />
               <FormSuccess message={success} />
             </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>My Notifications</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {allFriendsRequestedState && (
+              <div className=" cursor-pointer">
+                {allFriendsRequestedState.map((item) => (
+                  <div
+                    key={item.id}
+                    onClick={() => {
+                      onAcceptFriend(item.id);
+                    }}
+                  >
+                    <UserCard
+                      user={item}
+                      checked={true}
+                      addFriendIcon={false}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
           </CardContent>
         </Card>
 
