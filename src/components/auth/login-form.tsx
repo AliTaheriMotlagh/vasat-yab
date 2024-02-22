@@ -91,6 +91,7 @@ export const LoginForm = () => {
                         {...field}
                         disabled={isPending}
                         placeholder="123456"
+                        autoComplete="off"
                       />
                     </FormControl>
                     <FormMessage />
@@ -112,6 +113,7 @@ export const LoginForm = () => {
                           disabled={isPending}
                           placeholder="john.doe@example.com"
                           type="email"
+                          autoComplete="off"
                         />
                       </FormControl>
                       <FormMessage />

@@ -125,6 +125,7 @@ export const CreateRoomCard = () => {
                                   {...field}
                                   placeholder="John Party"
                                   disabled={isPending}
+                                  autoComplete="off"
                                 />
                               </FormControl>
                               <FormMessage />

@@ -113,6 +113,7 @@ export const SearchUserForm = () => {
                             placeholder="john.doe@example.com"
                             disabled={isPending}
                             type="email"
+                            autoComplete="false"
                           />
                         </FormControl>
                         <FormMessage />
