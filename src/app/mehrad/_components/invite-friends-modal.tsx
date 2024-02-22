@@ -123,7 +123,7 @@ const InviteFriendsModal = ({
         </Dialog>
       ) : (
         <Drawer onClose={reset}>
-          <DrawerTrigger>
+          <DrawerTrigger asChild>
             <div ref={closeBtn}>{children}</div>
           </DrawerTrigger>
           <DrawerContent className="px-0 pb-2 pt-4">
