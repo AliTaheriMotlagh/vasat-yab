@@ -16,8 +16,7 @@ import {
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { FormError } from "@/components/form-error";
-import { FormSuccess } from "@/components/form-success";
+import { toast } from "sonner";
 import { SearchUserSchema } from "@/schemas/friend";
 import { searchUser } from "@/actions/search-user";
 import { addFriend } from "@/actions/add-friend";
@@ -25,8 +24,6 @@ import { useMyFriends } from "@/store/use-my-friends";
 import UserCard from "../../app/mehrad/_components/user-card";
 
 export const SearchUserForm = () => {
-  const [error, setError] = useState<string | undefined>();
-  const [success, setSuccess] = useState<string | undefined>();
   const [isPending, startTransition] = useTransition();
 
   const [user, setUser] = useState<User | undefined>();
@@ -40,22 +37,20 @@ export const SearchUserForm = () => {
   });
 
   const onSubmitSearchForm = (values: z.infer<typeof SearchUserSchema>) => {
-    setError(undefined);
-    setSuccess(undefined);
     setUser(undefined);
 
     startTransition(() => {
       searchUser(values)
         .then((data) => {
           if (data.error) {
-            setError(data.error);
+            toast.error(data.error);
           }
 
           if (data.success) {
             setUser(data.data);
           }
         })
-        .catch(() => setError("Something went wrong!"));
+        .catch(() => toast.error("Something went wrong!"));
     });
   };
 
@@ -65,21 +60,19 @@ export const SearchUserForm = () => {
     }
     const friendId = user.id;
 
-    setError(undefined);
-    setSuccess(undefined);
     setUser(undefined);
 
     startTransition(() => {
       addFriend({ friendId })
         .then((data) => {
           if (data.error) {
-            setError(data.error);
+            toast.error(data.error);
           }
           if (data.success) {
-            setSuccess(data.success);
+            toast.success(data.success);
           }
         })
-        .catch(() => setError("Something went wrong!"));
+        .catch(() => toast.error("Something went wrong!"));
     });
   };
 
@@ -113,7 +106,7 @@ export const SearchUserForm = () => {
                             placeholder="john.doe@example.com"
                             disabled={isPending}
                             type="email"
-                            autoComplete="false"
+                            autoComplete="off"
                           />
                         </FormControl>
                         <FormMessage />
@@ -137,8 +130,6 @@ export const SearchUserForm = () => {
                 </span>
               )}
             </div>
-            <FormError message={error} />
-            <FormSuccess message={success} />
           </div>
         </CardContent>
       </Card>

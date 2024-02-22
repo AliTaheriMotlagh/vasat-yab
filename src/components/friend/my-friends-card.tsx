@@ -1,14 +1,13 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useTransition } from "react";
+import { toast } from "sonner";
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
-import { FormError } from "@/components/form-error";
 import { allFriend } from "@/actions/all-friend";
 import { useMyFriends } from "@/store/use-my-friends";
 import UserCard from "../../app/mehrad/_components/user-card";
 
 export const MyFriendsCard = () => {
-  const [error, setError] = useState<string | undefined>();
   const [isPending, startTransition] = useTransition();
 
   const { friends, setFriends } = useMyFriends((state) => state);
@@ -18,14 +17,14 @@ export const MyFriendsCard = () => {
       allFriend()
         .then((data) => {
           if (data.error) {
-            setError(data.error);
+            toast.error(data.error);
           }
 
           if (data.success) {
             setFriends(data.data);
           }
         })
-        .catch(() => setError("Something went wrong!"));
+        .catch(() => toast.error("Something went wrong!"));
     });
   };
 
@@ -55,7 +54,6 @@ export const MyFriendsCard = () => {
               <p className="">add some friend!</p>
             </div>
           )}
-          <FormError message={error} />
         </CardContent>
       </Card>
     </>

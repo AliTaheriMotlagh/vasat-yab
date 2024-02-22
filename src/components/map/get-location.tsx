@@ -1,9 +1,6 @@
 "use client";
 
-import * as z from "zod";
-import { useCallback, useRef, useEffect, useState, useTransition } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useCallback, useRef, useEffect, useState } from "react";
 
 import Map, { GeolocateControl, Marker, ViewState } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -23,23 +20,6 @@ import GeocoderControl from "@/components/map/mapgl/geocoder-control";
 
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { useCurrentLocation } from "@/store/use-current-location";
-import InviteFriendsModal from "@/app/mehrad/_components/invite-friends-modal";
-import { CreateRoomSchema } from "@/schemas/room";
-import { room } from "@/actions/room";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
-import { FormError } from "../form-error";
-import { FormSuccess } from "../form-success";
-import { User } from "@prisma/client";
-import { allFriend } from "@/actions/all-friend";
-import { useMyFriends } from "@/store/use-my-friends";
 
 export const GetLocation = () => {
   const { coordinate, isCoordinateSet, updateCoordinate, removeCoordinate } =

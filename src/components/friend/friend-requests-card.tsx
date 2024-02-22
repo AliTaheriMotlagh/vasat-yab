@@ -2,16 +2,13 @@
 
 import { useEffect, useState, useTransition } from "react";
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
-import { FormError } from "@/components/form-error";
-import { FormSuccess } from "@/components/form-success";
 import { acceptFriend } from "@/actions/accept-friend";
 import { allFriendRequest } from "@/actions/all-friend-request";
 import { useMyFriendsRequests } from "@/store/use-my-friend-requests";
 import UserCard from "../../app/mehrad/_components/user-card";
+import { toast } from "sonner";
 
 export const FriendRequestsCard = () => {
-  const [error, setError] = useState<string | undefined>();
-  const [success, setSuccess] = useState<string | undefined>();
   const [isPending, startTransition] = useTransition();
 
   const { friendRequests, setFriendRequests } = useMyFriendsRequests(
@@ -19,21 +16,18 @@ export const FriendRequestsCard = () => {
   );
 
   const onAcceptFriend = (friendId: string) => {
-    setError(undefined);
-    setSuccess(undefined);
-
     startTransition(() => {
       acceptFriend({ friendId })
         .then((data) => {
           if (data.error) {
-            setError(data.error);
+            toast.error(data.error);
           }
           if (data.success) {
-            setSuccess(data.success);
+            toast.success(data.success);
             getAllFriendsRequest();
           }
         })
-        .catch(() => setError("Something went wrong!"));
+        .catch(() => toast.error("Something went wrong!"));
     });
   };
 
@@ -42,14 +36,14 @@ export const FriendRequestsCard = () => {
       allFriendRequest()
         .then((data) => {
           if (data.error) {
-            setError(data.error);
+            toast.error(data.error);
           }
 
           if (data.success) {
             setFriendRequests(data.data);
           }
         })
-        .catch(() => setError("Something went wrong!"));
+        .catch(() => toast.error("Something went wrong!"));
     });
   };
 
@@ -83,9 +77,6 @@ export const FriendRequestsCard = () => {
               <p className="">No new friend request!</p>
             </div>
           )}
-
-          <FormError message={error} />
-          <FormSuccess message={success} />
         </CardContent>
       </Card>
     </>

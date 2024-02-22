@@ -23,15 +23,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useCurrentUser } from "@/hooks/use-current-user";
-import { FormError } from "@/components/form-error";
-import { FormSuccess } from "@/components/form-success";
+import { toast } from "sonner";
 
 const SettingsPage = () => {
   const user = useCurrentUser();
 
   const { update } = useSession();
-  const [error, setError] = useState<string | undefined>();
-  const [success, setSuccess] = useState<string | undefined>();
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof SettingsSchema>>({
@@ -50,15 +47,15 @@ const SettingsPage = () => {
       settings(values)
         .then((data) => {
           if (data.error) {
-            setError(data.error);
+            toast.error(data.error);
           }
 
           if (data.success) {
             update();
-            setSuccess(data.success);
+            toast.success(data.success);
           }
         })
-        .catch(() => setError("Something went wrong!"));
+        .catch(() => toast.error("Something went wrong!"));
     });
   };
 
@@ -172,8 +169,6 @@ const SettingsPage = () => {
                 />
               )}
             </div>
-            <FormError message={error} />
-            <FormSuccess message={success} />
             <Button disabled={isPending} type="submit">
               Save
             </Button>

@@ -20,8 +20,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { FormError } from "@/components/form-error";
-import { FormSuccess } from "@/components/form-success";
 import { Button } from "@/components/ui/button";
 import { room } from "@/actions/room";
 import { allFriend } from "@/actions/all-friend";
@@ -29,10 +27,9 @@ import { useCurrentLocation } from "@/store/use-current-location";
 import { useMyFriends } from "@/store/use-my-friends";
 import { CreateRoomSchema } from "@/schemas/room";
 import InviteFriendsModal from "@/app/mehrad/_components/invite-friends-modal";
+import { toast } from "sonner";
 
 export const CreateRoomCard = () => {
-  const [error, setError] = useState<string | undefined>();
-  const [success, setSuccess] = useState<string | undefined>();
   const [isPending, startTransition] = useTransition();
 
   const { coordinate, removeCoordinate } = useCurrentLocation((state) => state);
@@ -52,14 +49,14 @@ export const CreateRoomCard = () => {
       room(values)
         .then((data) => {
           if (data.error) {
-            setError(data.error);
+            toast.error(data.error);
           }
 
           if (data.success) {
-            setSuccess(data.success);
+            toast.info(data.success);
           }
         })
-        .catch(() => setError("Something went wrong!"));
+        .catch(() => toast.error("Something went wrong!"));
     });
   };
 
@@ -68,14 +65,14 @@ export const CreateRoomCard = () => {
       allFriend()
         .then((data) => {
           if (data.error) {
-            setError(data.error);
+            toast.error(data.error);
           }
 
           if (data.success) {
             setFriends(data.data);
           }
         })
-        .catch(() => setError("Something went wrong!"));
+        .catch(() => toast.error("Something went wrong!"));
     });
   };
 
@@ -145,8 +142,6 @@ export const CreateRoomCard = () => {
                           render={({ field }) => <></>}
                         />
                       </div>
-                      <FormError message={error} />
-                      <FormSuccess message={success} />
                       <Button disabled={isPending} type="submit">
                         Save
                       </Button>
