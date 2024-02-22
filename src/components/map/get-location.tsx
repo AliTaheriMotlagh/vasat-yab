@@ -76,14 +76,14 @@ export const GetLocation = () => {
                   latitude={marker.latitude}
                   anchor="center"
                 >
-                  <Pin size={20} />
+                  <Pin />
                 </Marker>
               )}
               {isCoordinateSet && (
                 <Marker
                   longitude={coordinate.longitude}
                   latitude={coordinate.latitude}
-                  anchor="bottom"
+                  anchor="center"
                   style={{
                     backgroundImage: `url(${user?.image})`,
                     width: `60px`,
@@ -95,7 +95,9 @@ export const GetLocation = () => {
                     cursor: "pointer",
                     padding: 0,
                   }}
-                ></Marker>
+                >
+                  <Pin visible={false} />
+                </Marker>
               )}
               <GeolocateControl
                 showAccuracyCircle={false}

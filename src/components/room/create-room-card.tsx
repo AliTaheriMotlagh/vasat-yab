@@ -1,7 +1,7 @@
 "use client";
 
 import * as z from "zod";
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useRef, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -32,7 +32,7 @@ import { toast } from "sonner";
 export const CreateRoomCard = () => {
   const [isPending, startTransition] = useTransition();
 
-  const { coordinate, removeCoordinate } = useCurrentLocation((state) => state);
+  const { coordinate, isCoordinateSet } = useCurrentLocation((state) => state);
 
   const { friends, setFriends } = useMyFriends((state) => state);
 
@@ -43,6 +43,18 @@ export const CreateRoomCard = () => {
       creatorLocation: undefined,
     },
   });
+
+  let inviteFriendBtn = useRef<HTMLButtonElement>(null);
+
+  const openInviteFriend = () => {
+    inviteFriendBtn?.current?.click();
+  };
+
+  useEffect(() => {
+    if (isCoordinateSet) {
+      openInviteFriend();
+    }
+  }, [coordinate]);
 
   const onSubmit = (values: z.infer<typeof CreateRoomSchema>) => {
     startTransition(() => {
@@ -100,7 +112,10 @@ export const CreateRoomCard = () => {
                   title="Create channel"
                   description="all users in chanel are can see your location"
                 >
-                  <Button className="w-full transform rounded-lg  text-sm font-bold uppercase tracking-wider shadow-lg transition hover:-translate-y-0.5  focus:outline-none focus:ring  focus:ring-opacity-50 focus:ring-offset-2 sm:text-base">
+                  <Button
+                    ref={inviteFriendBtn}
+                    className="w-full transform rounded-lg  text-sm font-bold uppercase tracking-wider shadow-lg transition hover:-translate-y-0.5  focus:outline-none focus:ring  focus:ring-opacity-50 focus:ring-offset-2 sm:text-base"
+                  >
                     ☎️ Add friend
                   </Button>
                 </InviteFriendsModal>

@@ -1,15 +1,7 @@
-import { GetLocation } from "@/components/map/get-location";
-import { CreateRoomCard } from "@/components/room/create-room-card";
+import GetLocationCard from "@/components/map/get-location-card";
 
 const SharePage = () => {
-  return (
-    <>
-      <div className="flex flex-col gap-4">
-        <GetLocation />
-        <CreateRoomCard />
-      </div>
-    </>
-  );
+  return <GetLocationCard />;
 };
 
 export default SharePage;
