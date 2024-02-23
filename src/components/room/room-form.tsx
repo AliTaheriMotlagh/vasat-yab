@@ -30,10 +30,13 @@ import { CreateRoomSchema } from "@/schemas/room";
 import InviteFriendsModal from "@/app/mehrad/_components/invite-friends-modal";
 import { useInvitedFriends } from "@/store/use-invited-friends";
 import { useRouter } from "next/navigation";
+import SelectedUserList from "@/app/mehrad/_components/selected-users-list";
 
 export const RoomForm = () => {
   const { coordinate, isCoordinateSet } = useCurrentLocation((state) => state);
-  const { invitedFriends } = useInvitedFriends((state) => state);
+  const { invitedFriends, resetInvitedFriends } = useInvitedFriends(
+    (state) => state,
+  );
 
   const { friends, setFriends } = useMyFriends((state) => state);
   const [isPending, startTransition] = useTransition();
@@ -65,8 +68,6 @@ export const RoomForm = () => {
       toast.error("select some friend!");
       return;
     }
-
-    console.log(values.invitedFriends);
 
     startTransition(() => {
       room(values)
@@ -102,6 +103,7 @@ export const RoomForm = () => {
 
   useEffect(() => {
     if (isCoordinateSet) {
+      resetInvitedFriends();
       openInviteFriend();
     }
   }, [coordinate]);
@@ -133,6 +135,7 @@ export const RoomForm = () => {
                     ☎️ Add friend
                   </Button>
                 </InviteFriendsModal>
+                <SelectedUserList users={invitedFriends} />
                 <div>
                   <Form {...form}>
                     <form
@@ -173,7 +176,7 @@ export const RoomForm = () => {
                         <FormField
                           control={form.control}
                           name="invitedFriends"
-                          defaultValue={invitedFriends}
+                          defaultValue={invitedFriends.map((item) => item.id)}
                           render={({ field }) => <></>}
                         />
                       </div>

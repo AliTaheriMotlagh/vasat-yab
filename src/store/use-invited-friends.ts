@@ -1,14 +1,15 @@
+import { User } from "@prisma/client";
 import { create } from "zustand";
 
 interface IInvitedFriends {
-  invitedFriends: string[];
-  setInvitedFriends: (newInvitedFriends: string[]) => void;
+  invitedFriends: User[];
+  setInvitedFriends: (newInvitedFriends: User[]) => void;
   resetInvitedFriends: () => void;
 }
 
 export const useInvitedFriends = create<IInvitedFriends>((set, get) => ({
   invitedFriends: [],
-  setInvitedFriends: (newInvitedFriends: string[]) => {
+  setInvitedFriends: (newInvitedFriends: User[]) => {
     set({ invitedFriends: newInvitedFriends });
   },
   resetInvitedFriends: () => {

@@ -16,7 +16,6 @@ import { Search } from "lucide-react";
 import { type User } from "@prisma/client";
 import { useRef, useState } from "react";
 import UserList from "./user-list";
-import ModalFooter from "./selected-users-list";
 import { useInvitedFriends } from "@/store/use-invited-friends";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -27,23 +26,23 @@ interface InviteFriendsModalProp {
 }
 
 const InviteFriendsModal = ({ children, users }: InviteFriendsModalProp) => {
-  const { setInvitedFriends } = useInvitedFriends((state) => state);
-
-  const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
+  const { invitedFriends, setInvitedFriends } = useInvitedFriends(
+    (state) => state,
+  );
   const [open, setOpen] = useState(false);
 
   const closeBtn = useRef<HTMLDivElement>(null);
 
   const selectUser = (user: User) => {
-    setSelectedUsers([...selectedUsers, user]);
+    setInvitedFriends([...invitedFriends, user]);
   };
 
   const deselectUser = (user: User) => {
-    setSelectedUsers(selectedUsers.filter((item) => item.id !== user.id));
+    setInvitedFriends(invitedFriends.filter((item) => item.id !== user.id));
   };
 
   const handleToggleSelectUser = (user: User) => {
-    if (!selectedUsers.some((item) => item.id == user.id)) {
+    if (!invitedFriends.some((item) => item.id == user.id)) {
       selectUser(user);
     } else {
       deselectUser(user);
@@ -51,13 +50,10 @@ const InviteFriendsModal = ({ children, users }: InviteFriendsModalProp) => {
   };
 
   const isUsersSelect = (userId: string): boolean => {
-    return selectedUsers.some((item) => item.id == userId);
+    return invitedFriends.some((item) => item.id == userId);
   };
 
   const onSubmit = () => {
-    if (selectedUsers.length != 0) {
-      setInvitedFriends(selectedUsers.map((item) => item.id));
-    }
     closeBtn.current?.click();
   };
 
@@ -89,14 +85,11 @@ const InviteFriendsModal = ({ children, users }: InviteFriendsModalProp) => {
               users={users}
             />
           </div>
-          <DrawerFooter className="flex h-16 w-full justify-center px-2 pb-0">
+          <DrawerFooter>
             <DrawerClose asChild>
-              <div className="relative flex h-full w-full items-center justify-between py-4">
-                <ModalFooter users={selectedUsers} />
-                <Button className="h-14" onClick={onSubmit}>
-                  Continue
-                </Button>
-              </div>
+              <Button className="h-full w-full" onClick={onSubmit}>
+                Continue
+              </Button>
             </DrawerClose>
           </DrawerFooter>
         </DrawerContent>

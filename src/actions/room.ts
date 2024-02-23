@@ -49,8 +49,6 @@ export const room = async (values: z.infer<typeof CreateRoomSchema>) => {
     },
   });
 
-  console.log("save room", invitedFriends);
-
   for (let index = 0; index < invitedFriends.length; index++) {
     const friendId = invitedFriends[index];
 

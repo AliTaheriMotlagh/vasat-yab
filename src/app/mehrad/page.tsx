@@ -80,13 +80,7 @@ const users = [
 const Page = () => {
   return (
     <>
-      <InviteFriendsModal
-        users={users}
-        title="Create channel"
-        description="all users in chanel are can see your location"
-      >
-        ⭐click
-      </InviteFriendsModal>
+      <InviteFriendsModal users={users}>⭐click</InviteFriendsModal>
     </>
   );
 };

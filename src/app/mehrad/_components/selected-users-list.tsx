@@ -1,12 +1,11 @@
 import { User } from "@prisma/client";
 import AvatarIcon from "./avatar-icon";
-import { Button } from "@/components/ui/button";
 
-interface ModalFooterProps {
+interface SelectedUserListProps {
   users: User[];
 }
 
-const ModalFooter = ({ users }: ModalFooterProps) => {
+const SelectedUserList = ({ users }: SelectedUserListProps) => {
   const maxVisibleUser = 5;
   return (
     <>
@@ -32,4 +31,4 @@ const ModalFooter = ({ users }: ModalFooterProps) => {
   );
 };
 
-export default ModalFooter;
+export default SelectedUserList;
