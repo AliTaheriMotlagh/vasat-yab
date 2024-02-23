@@ -22,6 +22,7 @@ import { searchUser } from "@/actions/search-user";
 import { addFriend } from "@/actions/add-friend";
 import { useMyFriends } from "@/store/use-my-friends";
 import UserCard from "../../app/mehrad/_components/user-card";
+import { Check, Plus } from "lucide-react";
 
 export const SearchUserForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -121,13 +122,12 @@ export const SearchUserForm = () => {
             </Form>
             <div>
               {user && (
-                <span onClick={onAddFriend} className=" cursor-pointer">
-                  <UserCard
-                    user={user!}
-                    checked={isMyFriend(user.id)}
-                    addFriendIcon={!isMyFriend(user.id)}
-                  />
-                </span>
+                <UserCard user={user!}>
+                  {isMyFriend(user.id) && (
+                    <Check onClick={onAddFriend} className=" cursor-pointer" />
+                  )}
+                  :{<Plus onClick={onAddFriend} className=" cursor-pointer" />}
+                </UserCard>
               )}
             </div>
           </div>

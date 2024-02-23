@@ -6,6 +6,7 @@ import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import { allFriend } from "@/actions/all-friend";
 import { useMyFriends } from "@/store/use-my-friends";
 import UserCard from "../../app/mehrad/_components/user-card";
+import { Check } from "lucide-react";
 
 export const MyFriendsCard = () => {
   const [isPending, startTransition] = useTransition();
@@ -43,7 +44,9 @@ export const MyFriendsCard = () => {
             <div>
               {friends.map((item) => (
                 <div key={item.id}>
-                  <UserCard user={item} checked={true} addFriendIcon={false} />
+                  <UserCard user={item}>
+                    <Check />
+                  </UserCard>
                 </div>
               ))}
             </div>

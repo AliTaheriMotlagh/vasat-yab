@@ -1,14 +1,12 @@
 import { type User } from "@prisma/client";
 import AvatarIcon from "./avatar-icon";
-import { Check, Plus } from "lucide-react";
 
 interface UserCardProp {
   user: User;
-  checked: boolean;
-  addFriendIcon?: boolean;
+  children: React.ReactNode;
 }
 
-const UserCard = ({ user, checked, addFriendIcon = false }: UserCardProp) => {
+const UserCard = ({ user, children }: UserCardProp) => {
   return (
     <>
       {user && (
@@ -20,17 +18,7 @@ const UserCard = ({ user, checked, addFriendIcon = false }: UserCardProp) => {
               <span className="line-clamp-1">{user.email}</span>
             </div>
           </div>
-          {checked && (
-            <span>
-              <Check />
-            </span>
-          )}
-          {addFriendIcon && (
-            <span>
-              <Plus />
-            </span>
-          )}{" "}
-          {/* TODO:make it reusable for add request too  */}
+          {children}
         </div>
       )}
     </>

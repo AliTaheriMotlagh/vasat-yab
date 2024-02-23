@@ -7,6 +7,7 @@ import { allFriendRequest } from "@/actions/all-friend-request";
 import { useMyFriendsRequests } from "@/store/use-my-friend-requests";
 import UserCard from "../../app/mehrad/_components/user-card";
 import { toast } from "sonner";
+import { Check } from "lucide-react";
 
 export const FriendRequestsCard = () => {
   const [isPending, startTransition] = useTransition();
@@ -59,16 +60,16 @@ export const FriendRequestsCard = () => {
         </CardHeader>
         <CardContent>
           {friendRequests && (
-            <div className=" cursor-pointer">
+            <div>
               {friendRequests.map((item) => (
-                <div
-                  key={item.id}
-                  onClick={() => {
-                    onAcceptFriend(item.id);
-                  }}
-                >
-                  <UserCard user={item} checked={true} addFriendIcon={false} />
-                </div>
+                <UserCard user={item} key={item.id}>
+                  <Check
+                    className=" cursor-pointer"
+                    onClick={() => {
+                      onAcceptFriend(item.id);
+                    }}
+                  />
+                </UserCard>
               ))}
             </div>
           )}

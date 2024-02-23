@@ -3,6 +3,7 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import UserCard from "./user-card";
 import { User } from "@prisma/client";
+import { Check } from "lucide-react";
 
 interface UserListProp {
   users: User[];
@@ -22,7 +23,9 @@ const UserList = ({ click, users, isUsersSelect }: UserListProp) => {
               }}
               key={user.id}
             >
-              <UserCard checked={isUsersSelect(user.id)} user={user} />
+              <UserCard user={user}>
+                {isUsersSelect(user.id) && <Check />}
+              </UserCard>
             </div>
           );
         })}
