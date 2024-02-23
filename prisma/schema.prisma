@@ -128,6 +128,7 @@ model Room {
   creatorId      String
   vasatlongitude Float
   vasatlatitude  Float
+  url            String
 
   User     User       @relation(fields: [creatorId], references: [id])
   RoomInfo RoomInfo[]

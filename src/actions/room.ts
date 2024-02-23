@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 import { getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
 import { CreateRoomSchema } from "@/schemas/room";
+import { nanoid } from "nanoid";
 
 export const room = async (values: z.infer<typeof CreateRoomSchema>) => {
   const user = await currentUser();
@@ -26,7 +27,7 @@ export const room = async (values: z.infer<typeof CreateRoomSchema>) => {
     return { error: "Invalid fields!" };
   }
 
-  const { title, creatorLocation } = validatedFields.data;
+  const { title, creatorLocation, invitedFriends } = validatedFields.data;
 
   const createRoom = await db.room.create({
     data: {
@@ -34,6 +35,7 @@ export const room = async (values: z.infer<typeof CreateRoomSchema>) => {
       creatorId: dbUser.id,
       vasatlatitude: 0,
       vasatlongitude: 0,
+      url: nanoid(),
     },
   });
 
@@ -47,5 +49,19 @@ export const room = async (values: z.infer<typeof CreateRoomSchema>) => {
     },
   });
 
-  return { success: "Room Created!" };
+  for (let index = 0; index < invitedFriends.length; index++) {
+    const friendId = invitedFriends[index];
+
+    await db.roomInfo.create({
+      data: {
+        roomId: createRoom.id,
+        userId: friendId,
+        longitude: 0,
+        latitude: 0,
+        isAccept: false,
+      },
+    });
+  }
+
+  return { success: "Room Created!", data: { url: createRoom.url } };
 };

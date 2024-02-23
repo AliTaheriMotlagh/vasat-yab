@@ -4,6 +4,7 @@ import * as z from "zod";
 import { useEffect, useRef, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 import {
   Card,
   CardContent,
@@ -27,20 +28,24 @@ import { useCurrentLocation } from "@/store/use-current-location";
 import { useMyFriends } from "@/store/use-my-friends";
 import { CreateRoomSchema } from "@/schemas/room";
 import InviteFriendsModal from "@/app/mehrad/_components/invite-friends-modal";
-import { toast } from "sonner";
+import { useInvitedFriends } from "@/store/use-invited-friends";
+import { useRouter } from "next/navigation";
 
-export const CreateRoomCard = () => {
-  const [isPending, startTransition] = useTransition();
-
+export const RoomForm = () => {
   const { coordinate, isCoordinateSet } = useCurrentLocation((state) => state);
+  const { invitedFriends } = useInvitedFriends((state) => state);
 
   const { friends, setFriends } = useMyFriends((state) => state);
+  const [isPending, startTransition] = useTransition();
+
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof CreateRoomSchema>>({
     resolver: zodResolver(CreateRoomSchema),
     defaultValues: {
-      title: undefined,
-      creatorLocation: undefined,
+      title: new Date().toLocaleString(),
+      creatorLocation: coordinate,
+      invitedFriends: invitedFriends,
     },
   });
 
@@ -50,13 +55,17 @@ export const CreateRoomCard = () => {
     inviteFriendBtn?.current?.click();
   };
 
-  useEffect(() => {
-    if (isCoordinateSet) {
-      openInviteFriend();
-    }
-  }, [coordinate]);
-
   const onSubmit = (values: z.infer<typeof CreateRoomSchema>) => {
+    if (!isCoordinateSet) {
+      toast.error("select your location!");
+      return;
+    }
+
+    if (invitedFriends.length == 0) {
+      toast.error("select some friend!");
+      return;
+    }
+
     startTransition(() => {
       room(values)
         .then((data) => {
@@ -66,6 +75,7 @@ export const CreateRoomCard = () => {
 
           if (data.success) {
             toast.info(data.success);
+            router.push(`/room/${data.data.url}`);
           }
         })
         .catch(() => toast.error("Something went wrong!"));
@@ -87,6 +97,12 @@ export const CreateRoomCard = () => {
         .catch(() => toast.error("Something went wrong!"));
     });
   };
+
+  useEffect(() => {
+    if (isCoordinateSet) {
+      openInviteFriend();
+    }
+  }, [coordinate]);
 
   useEffect(() => {
     getAllFriends();
@@ -157,7 +173,11 @@ export const CreateRoomCard = () => {
                           render={({ field }) => <></>}
                         />
                       </div>
-                      <Button disabled={isPending} type="submit">
+                      <Button
+                        disabled={isPending}
+                        type="submit"
+                        className="w-full transform rounded-lg bg-brand text-sm font-bold uppercase tracking-wider text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-brand-light focus:outline-none focus:ring focus:ring-brand focus:ring-opacity-50 focus:ring-offset-2 sm:text-base"
+                      >
                         Save
                       </Button>
                     </form>

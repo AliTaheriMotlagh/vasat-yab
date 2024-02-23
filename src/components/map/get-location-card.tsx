@@ -1,7 +1,7 @@
 "use client";
 
 import { GetLocation } from "@/components/map/get-location";
-import { CreateRoomCard } from "@/components/room/create-room-card";
+import { RoomForm } from "@/components/room/room-form";
 import { useCurrentLocation } from "@/store/use-current-location";
 
 const GetLocationCard = () => {
@@ -10,7 +10,7 @@ const GetLocationCard = () => {
     <>
       <div className="flex flex-col gap-4">
         <GetLocation />
-        {isCoordinateSet && <CreateRoomCard />}
+        {isCoordinateSet && <RoomForm />}
       </div>
     </>
   );

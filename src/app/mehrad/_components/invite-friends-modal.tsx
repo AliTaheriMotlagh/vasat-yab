@@ -32,6 +32,7 @@ import {
 import UserList from "./user-list";
 import SelectedUsersList from "./selected-users-list";
 import ModalFooter from "./selected-users-list";
+import { useInvitedFriends } from "@/store/use-invited-friends";
 
 interface InviteFriendsModalProp {
   children: React.ReactNode;
@@ -46,21 +47,25 @@ const InviteFriendsModal = ({
   description,
   users,
 }: InviteFriendsModalProp) => {
+
+  const { invitedFriends, setInvitedFriends } = useInvitedFriends(
+    (state) => state,
+  );
+  
   const [open, setOpen] = useState(false);
+
   const closeBtn = useRef<HTMLDivElement>(null);
-  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
-  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const selectUser = (userId: string) => {
-    setSelectedUsers([...selectedUsers, userId]);
+    setInvitedFriends([...invitedFriends, userId]);
   };
 
   const deselectUser = (userId: string) => {
-    setSelectedUsers(selectedUsers.filter((item) => item !== userId));
+    setInvitedFriends(invitedFriends.filter((item) => item !== userId));
   };
 
   const handleToggleSelectUser = (userId: string) => {
-    if (!selectedUsers.includes(userId)) {
+    if (!invitedFriends.includes(userId)) {
       selectUser(userId);
     } else {
       deselectUser(userId);
@@ -68,7 +73,7 @@ const InviteFriendsModal = ({
   };
 
   const isUsersSelect = (userId: string): boolean => {
-    return selectedUsers.includes(userId);
+    return invitedFriends.includes(userId);
   };
 
   const getUserInfo = (userId: string): User => {
@@ -115,7 +120,7 @@ const InviteFriendsModal = ({
               <ModalFooter
                 getUserInfo={getUserInfo}
                 onSubmit={onSubmit}
-                selectedUsers={selectedUsers}
+                selectedUsers={invitedFriends}
               />
             </DrawerClose>
           </DrawerFooter>
