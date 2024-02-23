@@ -69,6 +69,9 @@ export const RoomForm = () => {
       return;
     }
 
+    values.creatorLocation = coordinate;
+    values.invitedFriends = invitedFriends.map((item) => item.id);
+
     startTransition(() => {
       room(values)
         .then((data) => {
