@@ -1,8 +1,7 @@
 "use client";
 
-import { SearchUserForm } from "./search-user-form";
-import { MyFriendsCard } from "./my-friends-card";
-import { FriendRequestsCard } from "./friend-requests-card";
+import { SearchUserForm } from "@/components/friend/search-user-form";
+import { MyFriendsCard } from "@/components/friend/my-friends-card";
 
 export const FriendsCard = () => {
   return (

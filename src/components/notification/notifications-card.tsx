@@ -8,6 +8,8 @@ import { useNotifications } from "@/store/use-notifications";
 import { allNotifications } from "@/actions/all-notifications";
 import { FriendRequestsCard } from "../friend/friend-requests-card";
 import { Check } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useRoomInfoId } from "@/store/use-room-info-id";
 
 export const NotificationsCard = () => {
   const [isPending, startTransition] = useTransition();
@@ -16,7 +18,14 @@ export const NotificationsCard = () => {
     (state) => state,
   );
 
-  const onAcceptNotification = (roomInfoId: string) => {};
+  const { setRoomInfoId: setRoomInfo } = useRoomInfoId((state) => state);
+
+  const router = useRouter();
+
+  const onAcceptNotification = (roomUrl: string, roomInfoId: string) => {
+    setRoomInfo(roomInfoId);
+    router.push(`/invite/${roomUrl}`);
+  };
 
   const getAllNotifications = async () => {
     startTransition(() => {
@@ -48,17 +57,18 @@ export const NotificationsCard = () => {
           </CardHeader>
           <CardContent>
             {notifications && (
-              <div className=" cursor-pointer">
+              <div>
                 {notifications.map((item) => (
-                  <div
-                    key={item.id}
-                    onClick={() => {
-                      onAcceptNotification(item.id);
-                    }}
-                  >
+                  <div>
                     <h2>{item.Room.title}</h2>
                     <UserCard user={item.User}>
-                      <Check />
+                      <Check
+                        className=" cursor-pointer"
+                        key={item.id}
+                        onClick={() => {
+                          onAcceptNotification(item.Room.url, item.id);
+                        }}
+                      />
                     </UserCard>
                   </div>
                 ))}
