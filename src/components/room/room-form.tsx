@@ -44,8 +44,8 @@ export const RoomForm = () => {
     resolver: zodResolver(CreateRoomSchema),
     defaultValues: {
       title: new Date().toLocaleString(),
-      creatorLocation: coordinate,
-      invitedFriends: invitedFriends,
+      creatorLocation: undefined,
+      invitedFriends: undefined,
     },
   });
 
@@ -65,6 +65,8 @@ export const RoomForm = () => {
       toast.error("select some friend!");
       return;
     }
+
+    console.log(values.invitedFriends);
 
     startTransition(() => {
       room(values)
@@ -123,11 +125,7 @@ export const RoomForm = () => {
             </CardHeader>
             <CardContent>
               <div className="flex flex-col gap-4">
-                <InviteFriendsModal
-                  users={friends}
-                  title="Create channel"
-                  description="all users in chanel are can see your location"
-                >
+                <InviteFriendsModal users={friends}>
                   <Button
                     ref={inviteFriendBtn}
                     className="w-full transform rounded-lg  text-sm font-bold uppercase tracking-wider shadow-lg transition hover:-translate-y-0.5  focus:outline-none focus:ring  focus:ring-opacity-50 focus:ring-offset-2 sm:text-base"
@@ -170,6 +168,12 @@ export const RoomForm = () => {
                           control={form.control}
                           name="creatorLocation.longitude"
                           defaultValue={coordinate.longitude}
+                          render={({ field }) => <></>}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="invitedFriends"
+                          defaultValue={invitedFriends}
                           render={({ field }) => <></>}
                         />
                       </div>

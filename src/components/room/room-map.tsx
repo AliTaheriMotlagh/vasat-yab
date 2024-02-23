@@ -29,17 +29,16 @@ import { useCurrentUser } from "@/hooks/use-current-user";
 import { useCurrentLocation } from "@/store/use-current-location";
 import { Room, RoomInfo, User } from "@prisma/client";
 
-type ExtendedRoomInfo = RoomInfo & {
+type RoomInfoWithUser = RoomInfo & {
   User: User;
 };
 
 interface RoomMapProps {
   room: Room;
-  roomsInfo: ExtendedRoomInfo[];
+  roomsInfo: RoomInfoWithUser[];
 }
 export const RoomMap = ({ room, roomsInfo }: RoomMapProps) => {
   const user = useCurrentUser();
-  console.log(roomsInfo);
 
   const geoControlRef = useRef<mapboxgl.GeolocateControl>(null);
   const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || "";

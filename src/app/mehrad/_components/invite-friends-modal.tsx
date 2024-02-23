@@ -13,92 +13,66 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-import UserCard from "./user-card";
-import AvatarIcon from "./avatar-icon";
-import { Button } from "@/components/ui/button";
 import { type User } from "@prisma/client";
 import { useRef, useState } from "react";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { useMediaQuery } from "usehooks-ts";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import UserList from "./user-list";
-import SelectedUsersList from "./selected-users-list";
 import ModalFooter from "./selected-users-list";
 import { useInvitedFriends } from "@/store/use-invited-friends";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 interface InviteFriendsModalProp {
   children: React.ReactNode;
-  title: string;
-  description?: string;
   users: User[];
 }
 
-const InviteFriendsModal = ({
-  children,
-  title,
-  description,
-  users,
-}: InviteFriendsModalProp) => {
+const InviteFriendsModal = ({ children, users }: InviteFriendsModalProp) => {
+  const { setInvitedFriends } = useInvitedFriends((state) => state);
 
-  const { invitedFriends, setInvitedFriends } = useInvitedFriends(
-    (state) => state,
-  );
-  
+  const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
   const [open, setOpen] = useState(false);
 
   const closeBtn = useRef<HTMLDivElement>(null);
 
-  const selectUser = (userId: string) => {
-    setInvitedFriends([...invitedFriends, userId]);
+  const selectUser = (user: User) => {
+    setSelectedUsers([...selectedUsers, user]);
   };
 
-  const deselectUser = (userId: string) => {
-    setInvitedFriends(invitedFriends.filter((item) => item !== userId));
+  const deselectUser = (user: User) => {
+    setSelectedUsers(selectedUsers.filter((item) => item.id !== user.id));
   };
 
-  const handleToggleSelectUser = (userId: string) => {
-    if (!invitedFriends.includes(userId)) {
-      selectUser(userId);
+  const handleToggleSelectUser = (user: User) => {
+    if (!selectedUsers.some((item) => item.id == user.id)) {
+      selectUser(user);
     } else {
-      deselectUser(userId);
+      deselectUser(user);
     }
   };
 
   const isUsersSelect = (userId: string): boolean => {
-    return invitedFriends.includes(userId);
-  };
-
-  const getUserInfo = (userId: string): User => {
-    const user = users.find((i) => i.id === userId);
-    if (!user) {
-      throw new Error(`User with ID ${userId} not found`);
-    }
-    return user;
+    return selectedUsers.some((item) => item.id == userId);
   };
 
   const onSubmit = () => {
+    if (selectedUsers.length != 0) {
+      setInvitedFriends(selectedUsers.map((item) => item.id));
+    }
     closeBtn.current?.click();
   };
 
   return (
     <>
-      {/* TODO: had to delete dialog,fix it latter */}
       <Drawer open={open} onOpenChange={setOpen}>
         <DrawerTrigger asChild>
           <div ref={closeBtn}>{children}</div>
         </DrawerTrigger>
         <DrawerContent className="px-0 pb-2 pt-4">
           <DrawerHeader className="px-5">
-            <DrawerTitle>{title}</DrawerTitle>
-            <DrawerDescription>{description}</DrawerDescription>
+            <DrawerTitle>Add Friend</DrawerTitle>
+            <DrawerDescription>
+              not in list?add <Link href="/friends">new friend</Link>
+            </DrawerDescription>
           </DrawerHeader>
           <div className="mt-3 flex w-full flex-col">
             <div className="flex items-center gap-x-2 border-y-[3px] px-4 py-3">
@@ -117,11 +91,12 @@ const InviteFriendsModal = ({
           </div>
           <DrawerFooter className="flex h-16 w-full justify-center px-2 pb-0">
             <DrawerClose asChild>
-              <ModalFooter
-                getUserInfo={getUserInfo}
-                onSubmit={onSubmit}
-                selectedUsers={invitedFriends}
-              />
+              <div className="relative flex h-full w-full items-center justify-between py-4">
+                <ModalFooter users={selectedUsers} />
+                <Button className="h-14" onClick={onSubmit}>
+                  Continue
+                </Button>
+              </div>
             </DrawerClose>
           </DrawerFooter>
         </DrawerContent>

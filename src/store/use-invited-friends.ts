@@ -3,7 +3,7 @@ import { create } from "zustand";
 interface IInvitedFriends {
   invitedFriends: string[];
   setInvitedFriends: (newInvitedFriends: string[]) => void;
-  reset: () => void;
+  resetInvitedFriends: () => void;
 }
 
 export const useInvitedFriends = create<IInvitedFriends>((set, get) => ({
@@ -11,7 +11,7 @@ export const useInvitedFriends = create<IInvitedFriends>((set, get) => ({
   setInvitedFriends: (newInvitedFriends: string[]) => {
     set({ invitedFriends: newInvitedFriends });
   },
-  reset: () => {
+  resetInvitedFriends: () => {
     set({ invitedFriends: [] });
   },
 }));

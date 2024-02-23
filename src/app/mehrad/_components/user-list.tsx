@@ -6,8 +6,8 @@ import { User } from "@prisma/client";
 
 interface UserListProp {
   users: User[];
-  click: (arg: string) => void;
-  isUsersSelect: (arg: string) => boolean;
+  click: (user: User) => void;
+  isUsersSelect: (userId: string) => boolean;
 }
 
 const UserList = ({ click, users, isUsersSelect }: UserListProp) => {
@@ -18,7 +18,7 @@ const UserList = ({ click, users, isUsersSelect }: UserListProp) => {
           return (
             <div
               onClick={() => {
-                click(user.id);
+                click(user);
               }}
               key={user.id}
             >

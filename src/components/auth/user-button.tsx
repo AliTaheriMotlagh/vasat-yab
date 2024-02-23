@@ -14,6 +14,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { logout } from "@/actions/logout";
 import Link from "next/link";
+import { MailIcon } from "lucide-react";
 
 export const UserButton = () => {
   const user = useCurrentUser();
@@ -34,6 +35,13 @@ export const UserButton = () => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="w-auto" align="end">
+        <Link href="/notifications" className="cursor-pointer">
+          <DropdownMenuItem>
+            <MailIcon className="mr-2 h-4 w-4" />
+            <span>Notifications</span>
+          </DropdownMenuItem>
+        </Link>
+        <DropdownMenuSeparator />
         <Link href="/friends" className="cursor-pointer">
           <DropdownMenuItem>
             <HandIcon className="mr-2 h-4 w-4" />

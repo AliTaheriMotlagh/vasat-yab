@@ -42,8 +42,8 @@ export const GetLocation = () => {
   }, []);
 
   const [marker, setMarker] = useState({
-    latitude: 0,
-    longitude: 0,
+    latitude: initialViewState.latitude,
+    longitude: initialViewState.longitude,
   });
 
   useEffect(() => {
@@ -54,6 +54,10 @@ export const GetLocation = () => {
       });
     }
   }, [isCoordinateSet]);
+
+  useEffect(() => {
+    removeCoordinate();
+  }, []);
 
   return (
     <>

@@ -5,7 +5,7 @@ import * as z from "zod";
 import { db } from "@/lib/db";
 import { getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
-import { AcceptFriendSchema, AddFriendSchema } from "@/schemas/friend";
+import { AcceptFriendSchema } from "@/schemas/friend";
 
 export const acceptFriend = async (
   values: z.infer<typeof AcceptFriendSchema>,
@@ -22,7 +22,7 @@ export const acceptFriend = async (
     return { error: "Unauthorized" };
   }
 
-  const validatedFields = AddFriendSchema.safeParse(values);
+  const validatedFields = AcceptFriendSchema.safeParse(values);
 
   if (!validatedFields.success) {
     return { error: "Invalid fields!" };
