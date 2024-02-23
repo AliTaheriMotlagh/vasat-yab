@@ -13,6 +13,7 @@ export const getRoomInfos = async (roomId: string) => {
   const roomInfo = await db.roomInfo.findMany({
     where: {
       roomId: roomId,
+      isAccept: true,
     },
     include: { User: true },
   });
