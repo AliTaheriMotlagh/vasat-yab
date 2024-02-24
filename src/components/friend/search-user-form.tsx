@@ -126,7 +126,9 @@ export const SearchUserForm = () => {
                   {isMyFriend(user.id) && (
                     <Check onClick={onAddFriend} className=" cursor-pointer" />
                   )}
-                  :{<Plus onClick={onAddFriend} className=" cursor-pointer" />}
+                  {!isMyFriend(user.id) && (
+                    <Plus onClick={onAddFriend} className=" cursor-pointer" />
+                  )}
                 </UserCard>
               )}
             </div>

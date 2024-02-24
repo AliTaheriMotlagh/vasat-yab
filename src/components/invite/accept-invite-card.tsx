@@ -5,12 +5,13 @@ import { GetLocation } from "@/components/map/get-location";
 import { useCurrentLocation } from "@/store/use-current-location";
 import { useRoomInfoId } from "@/store/use-room-info-id";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 interface IAcceptInviteCardProps {}
 
 const AcceptInviteCard = () => {
+  const [isFirst, setIsFirst] = useState(true);
   const { isCoordinateSet, coordinate, removeCoordinate } = useCurrentLocation(
     (state) => state,
   );
@@ -48,9 +49,12 @@ const AcceptInviteCard = () => {
   };
 
   useEffect(() => {
-    if (isCoordinateSet) {
-      onAcceptInvite();
+    if (!isFirst) {
+      if (isCoordinateSet) {
+        onAcceptInvite();
+      }
     }
+    setIsFirst(false); //Todo:problem with state delete isSet entirely
   }, [isCoordinateSet]);
 
   useEffect(() => {
