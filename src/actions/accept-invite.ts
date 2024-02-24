@@ -55,5 +55,37 @@ export const acceptInvite = async (
     },
   });
 
+  const otherFriends = await db.roomInfo.findMany({
+    where: { roomId: roomInfo.roomId },
+  });
+
+  let acceptedUser = 0;
+  let totalLongitude = 0;
+  let totalLatitude = 0;
+
+  for (let index = 0; index < otherFriends.length; index++) {
+    const element = otherFriends[index];
+    if (element.isAccept === true) {
+      acceptedUser++;
+      totalLongitude = totalLongitude + element.longitude;
+      totalLatitude = totalLatitude + element.latitude;
+    }
+  }
+
+  if (acceptedUser === otherFriends.length) {
+    const vasatLongitude = totalLongitude / otherFriends.length;
+    const vasatLatitude = totalLatitude / otherFriends.length;
+
+    await db.room.update({
+      where: {
+        id: roomInfo.roomId,
+      },
+      data: {
+        vasatlongitude: vasatLongitude,
+        vasatlatitude: vasatLatitude,
+        isFinished: true,
+      },
+    });
+  }
   return { success: "successfully accept friend request" };
 };

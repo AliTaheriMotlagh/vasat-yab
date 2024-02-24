@@ -36,6 +36,7 @@ export const room = async (values: z.infer<typeof CreateRoomSchema>) => {
       vasatlatitude: 0,
       vasatlongitude: 0,
       url: nanoid(),
+      isFinished: false,
     },
   });
 

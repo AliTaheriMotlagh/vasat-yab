@@ -1,6 +1,7 @@
 import { RoomMap } from "@/components/room/room-map";
 import { currentUser } from "@/lib/auth";
 import { getRoomBySlug, getRoomInfos } from "@/lib/room";
+import { notFound } from "next/navigation";
 
 interface RoomCardProps {
   url: string;
@@ -8,9 +9,14 @@ interface RoomCardProps {
 
 const RoomCard = async ({ url }: RoomCardProps) => {
   const room = await getRoomBySlug(url);
-  const roomInfos = await getRoomInfos(room?.id || "");
+  const roomInfos = await getRoomInfos(room?.id!);
+  if (!room || !roomInfos) {
+    notFound();
+  }
   return (
-    <>{room && roomInfos && <RoomMap room={room} roomsInfo={roomInfos} />}</>
+    <>
+      <RoomMap room={room} roomsInfo={roomInfos} />
+    </>
   );
 };
 

@@ -129,6 +129,7 @@ model Room {
   vasatlongitude Float
   vasatlatitude  Float
   url            String
+  isFinished     Boolean
 
   User     User       @relation(fields: [creatorId], references: [id])
   RoomInfo RoomInfo[]

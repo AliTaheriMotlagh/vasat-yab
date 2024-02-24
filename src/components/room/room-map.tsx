@@ -74,6 +74,20 @@ export const RoomMap = ({ room, roomsInfo }: RoomMapProps) => {
     [],
   );
 
+  const vasat = useMemo(
+    () => (
+      <Marker
+        key={`vasat`}
+        longitude={room.vasatlongitude}
+        latitude={room.vasatlatitude}
+        anchor="center"
+      >
+        <Pin visible={room.isFinished} />
+      </Marker>
+    ),
+    [],
+  );
+
   return (
     <>
       <Card>
@@ -91,6 +105,7 @@ export const RoomMap = ({ room, roomsInfo }: RoomMapProps) => {
                   attributionControl={false}
                 >
                   {pins}
+                  {vasat}
                 </Map>
               </div>
             </div>
