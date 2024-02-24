@@ -3,7 +3,9 @@ import { create } from "zustand";
 
 type RoomInfoWithUser = RoomInfo & {
   User: User;
-  Room: Room;
+  Room: Room & {
+    User: User;
+  };
 };
 
 interface INotifications {

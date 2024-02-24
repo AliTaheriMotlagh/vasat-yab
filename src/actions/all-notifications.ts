@@ -25,7 +25,7 @@ export const allNotifications = async () => {
     },
     include: {
       User: true,
-      Room: true,
+      Room: { include: { User: true } },
     },
   });
 

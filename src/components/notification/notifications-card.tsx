@@ -61,7 +61,7 @@ export const NotificationsCard = () => {
                 {notifications.map((item) => (
                   <div>
                     <h2>{item.Room.title}</h2>
-                    <UserCard user={item.User}>
+                    <UserCard user={item.Room.User}>
                       <Check
                         className=" cursor-pointer"
                         key={item.id}
