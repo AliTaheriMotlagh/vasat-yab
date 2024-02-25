@@ -97,7 +97,7 @@ export const RoomMap = ({ room, roomsInfo }: RoomMapProps) => {
     initialViewState = {
       latitude: room.vasatlatitude,
       longitude: room.vasatlongitude,
-      zoom: 10,
+      zoom: 9,
     };
   }
 
@@ -124,15 +124,17 @@ export const RoomMap = ({ room, roomsInfo }: RoomMapProps) => {
             </div>
           </div>
         </CardContent>
-        <CardFooter>
-          <Link
-            href={mapLink}
-            target="_blank"
-            className=" inline-block w-full transform rounded-lg bg-brand px-5 py-3 text-center text-sm font-bold uppercase tracking-wider text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-brand-light focus:outline-none focus:ring focus:ring-brand focus:ring-opacity-50 focus:ring-offset-2 active:bg-brand-dark sm:text-base"
-          >
-            <span>Go</span>
-          </Link>
-        </CardFooter>
+        {room.isFinished && (
+          <CardFooter>
+            <Link
+              href={mapLink}
+              target="_blank"
+              className=" inline-block w-full transform rounded-lg bg-brand px-5 py-3 text-center text-sm font-bold uppercase tracking-wider text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-brand-light focus:outline-none focus:ring focus:ring-brand focus:ring-opacity-50 focus:ring-offset-2 active:bg-brand-dark sm:text-base"
+            >
+              <span>Go</span>
+            </Link>
+          </CardFooter>
+        )}
       </Card>
     </>
   );
