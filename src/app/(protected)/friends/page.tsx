@@ -1,7 +1,7 @@
 import { FriendsCard } from "@/components/friend/friends-card";
 
-const SharePage = () => {
+const FriendsPage = () => {
   return <FriendsCard />;
 };
 
-export default SharePage;
+export default FriendsPage;
