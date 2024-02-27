@@ -5,7 +5,6 @@ import * as z from "zod";
 import { db } from "@/lib/db";
 import { getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
-import { CreateRoomSchema } from "@/schemas/room";
 import { SearchUserSchema } from "@/schemas/friend";
 
 export const searchUser = async (values: z.infer<typeof SearchUserSchema>) => {

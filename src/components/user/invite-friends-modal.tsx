@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { type User } from "@prisma/client";
 import { useRef, useState } from "react";
-import UserList from "./user-list";
+import UserList from "@/components/user/user-list";
 import { useInvitedFriends } from "@/store/use-invited-friends";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";

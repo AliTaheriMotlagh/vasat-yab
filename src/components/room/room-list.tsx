@@ -1,15 +1,15 @@
 import { currentUser } from "@/lib/auth";
-import { getMyRooms, getRoomInfos } from "@/lib/room";
+import { getMyRooms } from "@/lib/room";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../ui/card";
-import SelectedUserList from "@/app/mehrad/_components/selected-users-list";
+} from "@/components/ui/card";
+import SelectedUserList from "@/components/user/selected-users-list";
 import Link from "next/link";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { ListChecks, ListTodo } from "lucide-react";
 
 interface RoomListProps {}

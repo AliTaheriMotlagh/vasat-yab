@@ -2,11 +2,11 @@
 
 import { useEffect, useTransition } from "react";
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
-import UserCard from "../../app/mehrad/_components/user-card";
+import UserCard from "@/components/user/user-card";
 import { toast } from "sonner";
 import { useNotifications } from "@/store/use-notifications";
 import { allNotifications } from "@/actions/all-notifications";
-import { FriendRequestsCard } from "../friend/friend-requests-card";
+import { FriendRequestsCard } from "@/components/friend/friend-requests-card";
 import { Check } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useRoomInfoId } from "@/store/use-room-info-id";

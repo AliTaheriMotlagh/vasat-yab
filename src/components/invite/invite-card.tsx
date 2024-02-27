@@ -1,6 +1,6 @@
 "use client";
 
-import AcceptInviteCard from "./accept-invite-card";
+import AcceptInviteCard from "@/components/invite/accept-invite-card";
 
 export const InviteCard = () => {
   return (

@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import { allFriend } from "@/actions/all-friend";
 import { useMyFriends } from "@/store/use-my-friends";
-import UserCard from "../../app/mehrad/_components/user-card";
+import UserCard from "@/components/user/user-card";
 import { Check } from "lucide-react";
 
 export const MyFriendsCard = () => {

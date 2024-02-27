@@ -21,7 +21,7 @@ import { SearchUserSchema } from "@/schemas/friend";
 import { searchUser } from "@/actions/search-user";
 import { addFriend } from "@/actions/add-friend";
 import { useMyFriends } from "@/store/use-my-friends";
-import UserCard from "../../app/mehrad/_components/user-card";
+import UserCard from "@/components/user/user-card";
 import { Check, Plus } from "lucide-react";
 
 export const SearchUserForm = () => {

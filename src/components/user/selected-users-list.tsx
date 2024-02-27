@@ -1,5 +1,5 @@
 import { User } from "@prisma/client";
-import AvatarIcon from "./avatar-icon";
+import AvatarIcon from "@/components/user/avatar-icon";
 
 interface SelectedUserListProps {
   users: User[];

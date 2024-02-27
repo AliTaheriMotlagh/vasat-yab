@@ -1,5 +1,4 @@
 import { RoomMap } from "@/components/room/room-map";
-import { currentUser } from "@/lib/auth";
 import { getRoomBySlug, getRoomInfos } from "@/lib/room";
 import { notFound } from "next/navigation";
 

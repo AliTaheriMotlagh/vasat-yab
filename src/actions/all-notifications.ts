@@ -3,7 +3,6 @@
 import { db } from "@/lib/db";
 import { getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
-import { room } from "./room";
 
 export const allNotifications = async () => {
   const self = await currentUser();

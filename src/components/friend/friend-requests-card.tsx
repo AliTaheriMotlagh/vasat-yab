@@ -5,7 +5,7 @@ import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import { acceptFriend } from "@/actions/accept-friend";
 import { allFriendRequest } from "@/actions/all-friend-request";
 import { useMyFriendsRequests } from "@/store/use-my-friend-requests";
-import UserCard from "../../app/mehrad/_components/user-card";
+import UserCard from "@/components/user/user-card";
 import { toast } from "sonner";
 import { Check } from "lucide-react";
 

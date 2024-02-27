@@ -1,35 +1,23 @@
 "use client";
 
-import {
-  useCallback,
-  useRef,
-  useEffect,
-  useState,
-  startTransition,
-  useMemo,
-} from "react";
+import { useRef, useMemo } from "react";
 
-import Map, { GeolocateControl, Marker, ViewState } from "react-map-gl";
+import Map, { Marker } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 
 import Pin from "@/components/map/mapgl/pin";
-import GeocoderControl from "@/components/map/mapgl/geocoder-control";
 
 import { useCurrentUser } from "@/hooks/use-current-user";
-import { useCurrentLocation } from "@/store/use-current-location";
 import { Room, RoomInfo, User } from "@prisma/client";
 import Link from "next/link";
-import dynamic from "next/dynamic";
 
 type RoomInfoWithUser = RoomInfo & {
   User: User;

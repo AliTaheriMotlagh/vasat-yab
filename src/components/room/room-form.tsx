@@ -27,10 +27,10 @@ import { allFriend } from "@/actions/all-friend";
 import { useCurrentLocation } from "@/store/use-current-location";
 import { useMyFriends } from "@/store/use-my-friends";
 import { CreateRoomSchema } from "@/schemas/room";
-import InviteFriendsModal from "@/app/mehrad/_components/invite-friends-modal";
+import InviteFriendsModal from "@/components/user/invite-friends-modal";
 import { useInvitedFriends } from "@/store/use-invited-friends";
 import { useRouter } from "next/navigation";
-import SelectedUserList from "@/app/mehrad/_components/selected-users-list";
+import SelectedUserList from "@/components/user/selected-users-list";
 
 export const RoomForm = () => {
   const { coordinate, isCoordinateSet } = useCurrentLocation((state) => state);

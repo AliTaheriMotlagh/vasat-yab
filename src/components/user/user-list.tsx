@@ -1,7 +1,7 @@
 "use client";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
-import UserCard from "./user-card";
+import UserCard from "@/components/user/user-card";
 import { User } from "@prisma/client";
 import { Check } from "lucide-react";
 

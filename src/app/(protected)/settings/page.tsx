@@ -3,7 +3,7 @@
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useTransition, useState } from "react";
+import { useTransition } from "react";
 import { useSession } from "next-auth/react";
 
 import { Switch } from "@/components/ui/switch";
