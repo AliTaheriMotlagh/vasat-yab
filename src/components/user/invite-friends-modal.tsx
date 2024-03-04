@@ -30,6 +30,8 @@ const InviteFriendsModal = ({ children, users }: InviteFriendsModalProp) => {
     (state) => state,
   );
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
+  let filteredUsers = users.filter((i) => i.email?.includes(search));
 
   const closeBtn = useRef<HTMLDivElement>(null);
 
@@ -57,6 +59,9 @@ const InviteFriendsModal = ({ children, users }: InviteFriendsModalProp) => {
     closeBtn.current?.click();
   };
 
+  const onSearch = (value: string) => {
+    setSearch(value);
+  };
   return (
     <>
       <Drawer open={open} onOpenChange={setOpen}>
@@ -77,12 +82,13 @@ const InviteFriendsModal = ({ children, users }: InviteFriendsModalProp) => {
                 placeholder="Search users"
                 className="border-0 text-lg shadow-none focus:outline-0 focus-visible:ring-0"
                 autoComplete="off"
+                onChange={(value) => onSearch(value.target.value)}
               />
             </div>
             <UserList
               click={handleToggleSelectUser}
               isUsersSelect={isUsersSelect}
-              users={users}
+              users={filteredUsers}
             />
           </div>
           <DrawerFooter>
