@@ -60,7 +60,7 @@ const InviteFriendsModal = ({ children, users }: InviteFriendsModalProp) => {
   };
 
   const onSearch = (value: string) => {
-    setSearch(value);
+    setSearch(value.toLowerCase());
   };
   return (
     <>

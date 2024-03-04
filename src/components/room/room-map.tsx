@@ -93,7 +93,10 @@ export const RoomMap = ({ room, roomsInfo }: RoomMapProps) => {
     <>
       <Card>
         <CardHeader>
-          <CardTitle>{room.title}</CardTitle>
+          <CardTitle className="flex justify-between ">
+            <span>Time: {room.createdAt.toLocaleString()}</span>
+            <span>Title: {room.title}</span>
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className=" flex flex-col gap-4">
