@@ -17,3 +17,7 @@ export const AcceptFriendSchema = z.object({
 export const RejectFriendSchema = z.object({
   friendId: z.string(),
 });
+
+export const DeleteFriendSchema = z.object({
+  friendId: z.string(),
+});

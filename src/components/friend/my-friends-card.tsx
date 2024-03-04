@@ -6,7 +6,8 @@ import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import { allFriend } from "@/actions/all-friend";
 import { useMyFriends } from "@/store/use-my-friends";
 import UserCard from "@/components/user/user-card";
-import { Check } from "lucide-react";
+import { Trash } from "lucide-react";
+import { deleteFriend } from "@/actions/delete-friend";
 
 export const MyFriendsCard = () => {
   const [isPending, startTransition] = useTransition();
@@ -29,6 +30,22 @@ export const MyFriendsCard = () => {
     });
   };
 
+  const onDeleteFriend = (friendId: string) => {
+    startTransition(() => {
+      deleteFriend({ friendId })
+        .then((data) => {
+          if (data.error) {
+            toast.error(data.error);
+          }
+          if (data.success) {
+            toast.success(data.success);
+            getAllFriends();
+          }
+        })
+        .catch(() => toast.error("Something went wrong!"));
+    });
+  };
+
   useEffect(() => {
     getAllFriends();
   }, []);
@@ -45,7 +62,12 @@ export const MyFriendsCard = () => {
               {friends.map((item) => (
                 <div key={item.id}>
                   <UserCard user={item}>
-                    <Check />
+                    <Trash
+                      className=" cursor-pointer"
+                      onClick={() => {
+                        onDeleteFriend(item.id);
+                      }}
+                    />
                   </UserCard>
                 </div>
               ))}
