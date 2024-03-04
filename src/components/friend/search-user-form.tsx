@@ -116,7 +116,7 @@ export const SearchUserForm = () => {
                   />
                 </div>
                 <Button className="w-full" disabled={isPending} type="submit">
-                  seach
+                  search
                 </Button>
               </form>
             </Form>
