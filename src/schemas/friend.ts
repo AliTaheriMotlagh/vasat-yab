@@ -13,3 +13,7 @@ export const AddFriendSchema = z.object({
 export const AcceptFriendSchema = z.object({
   friendId: z.string(),
 });
+
+export const RejectFriendSchema = z.object({
+  friendId: z.string(),
+});
