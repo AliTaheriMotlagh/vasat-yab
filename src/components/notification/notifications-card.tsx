@@ -59,12 +59,11 @@ export const NotificationsCard = () => {
             {notifications && (
               <div>
                 {notifications.map((item) => (
-                  <div>
+                  <div key={item.id}>
                     <h2>{item.Room.title}</h2>
                     <UserCard user={item.Room.User}>
                       <Check
                         className=" cursor-pointer"
-                        key={item.id}
                         onClick={() => {
                           onAcceptNotification(item.Room.url, item.id);
                         }}
