@@ -8,6 +8,17 @@ import { useMyFriends } from "@/store/use-my-friends";
 import UserCard from "@/components/user/user-card";
 import { Trash } from "lucide-react";
 import { deleteFriend } from "@/actions/delete-friend";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export const MyFriendsCard = () => {
   const [isPending, startTransition] = useTransition();
@@ -62,12 +73,33 @@ export const MyFriendsCard = () => {
               {friends.map((item) => (
                 <div key={item.id}>
                   <UserCard user={item}>
-                    <Trash
-                      className=" cursor-pointer"
-                      onClick={() => {
-                        onDeleteFriend(item.id);
-                      }}
-                    />
+                    <AlertDialog>
+                      <AlertDialogTrigger>
+                        <Trash className=" cursor-pointer" />
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>
+                            Are you absolutely sure?
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This action cannot be undone. This will permanently
+                            delete your friend.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction
+                            className="bg-red-500 hover:bg-red-400"
+                            onClick={() => {
+                              onDeleteFriend(item.id);
+                            }}
+                          >
+                            Delete
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </UserCard>
                 </div>
               ))}

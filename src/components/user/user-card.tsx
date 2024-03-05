@@ -18,7 +18,7 @@ const UserCard = ({ user, children }: UserCardProp) => {
               <span className="line-clamp-1">{user.email}</span>
             </div>
           </div>
-          {children}
+          <div className="flex gap-4">{children}</div>
         </div>
       )}
     </>
