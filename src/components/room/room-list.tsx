@@ -50,6 +50,11 @@ const RoomList = async () => {
           })}
         </div>
       )}
+      {rooms.length === 0 && (
+        <div className="mt-4 flex justify-center">
+          <p className="font-semibold">No room yet!</p>
+        </div>
+      )}
     </>
   );
 };

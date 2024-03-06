@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { test, expect } from "@playwright/test";
 
 test("friend", async ({ page, browserName }) => {
@@ -85,7 +86,7 @@ test("friend", async ({ page, browserName }) => {
   await page.getByRole("button", { name: "Login" }).click();
 
   await page.waitForLoadState("networkidle");
-  await expect(page).toHaveURL("/share");
+  await expect(page).toHaveURL(DEFAULT_LOGIN_REDIRECT);
 
   //friend request to second user
 

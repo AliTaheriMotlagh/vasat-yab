@@ -35,27 +35,6 @@ export const UserButton = () => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="w-auto" align="end">
-        <Link href="/rooms" className="cursor-pointer">
-          <DropdownMenuItem>
-            <MapPinned className="mr-2 h-4 w-4" />
-            <span>Rooms</span>
-          </DropdownMenuItem>
-        </Link>
-        <DropdownMenuSeparator />
-        <Link href="/notifications" className="cursor-pointer">
-          <DropdownMenuItem>
-            <MailIcon className="mr-2 h-4 w-4" />
-            <span>Notifications</span>
-          </DropdownMenuItem>
-        </Link>
-        <DropdownMenuSeparator />
-        <Link href="/friends" className="cursor-pointer">
-          <DropdownMenuItem>
-            <HandIcon className="mr-2 h-4 w-4" />
-            <span>Friends</span>
-          </DropdownMenuItem>
-        </Link>
-        <DropdownMenuSeparator />
         <Link href="/settings" className="cursor-pointer">
           <DropdownMenuItem>
             <GearIcon className="mr-2 h-4 w-4 " />
