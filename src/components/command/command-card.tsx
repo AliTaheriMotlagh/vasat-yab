@@ -20,7 +20,9 @@ export const CommandCard = () => {
               <div>
                 <Card className=" transform cursor-pointer rounded-lg bg-brand  tracking-wider text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-brand-light focus:outline-none focus:ring focus:ring-brand focus:ring-opacity-50 focus:ring-offset-2 active:bg-brand-dark">
                   <CardContent className="flex items-center justify-center p-6">
-                    <span className="text-3xl font-semibold">Create Room</span>
+                    <span className="text-3xl font-semibold">
+                      Create Room 📍
+                    </span>
                   </CardContent>
                 </Card>
               </div>
@@ -31,7 +33,7 @@ export const CommandCard = () => {
               <div>
                 <Card>
                   <CardContent className="flex items-center justify-center p-6">
-                    <span className="text-3xl font-semibold">Rooms</span>
+                    <span className="text-3xl font-semibold">Rooms 🚻</span>
                   </CardContent>
                 </Card>
               </div>
@@ -42,7 +44,9 @@ export const CommandCard = () => {
               <div>
                 <Card>
                   <CardContent className="flex items-center justify-center p-6">
-                    <span className="text-3xl font-semibold">Friends</span>
+                    <span className="text-3xl font-semibold">
+                      Friends 👨‍👩‍👦‍👧
+                    </span>
                   </CardContent>
                 </Card>
               </div>
@@ -54,7 +58,7 @@ export const CommandCard = () => {
                 <Card>
                   <CardContent className="flex items-center justify-center p-6">
                     <span className="text-3xl font-semibold">
-                      Notifications
+                      Notifications 📩
                     </span>
                   </CardContent>
                 </Card>
