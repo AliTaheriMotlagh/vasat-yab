@@ -1,21 +1,7 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<p align="center">
+  <a href="https://vasatyab.vercel.app" target="blank"><img src="https://vasatyab.vercel.app/img/logo.svg" width="200" alt="Siktir Logo" /></a>
+</p>
 
-## Getting Started
+## Description
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## The Midpoint Calculator
-
-Meet in the middle, effortlessly.
+[VasatYab](https://vasatyab.vercel.app) The midpoint calculator.
